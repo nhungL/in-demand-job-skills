@@ -1,0 +1,3 @@
+[submodule "src/main/frontend"]
+	path = src/main/frontend
+	url = https://github.com/nhungL/in-demand-job-skills-web.git
