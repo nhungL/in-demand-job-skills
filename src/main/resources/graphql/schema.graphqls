@@ -1,0 +1,10 @@
+type Query {
+    jobById(id: ID!): Job
+    getAllJobs: [Job]
+}
+
+type Job {
+    id: ID!
+    title: String!
+    skills: [String]
+}
