@@ -1,53 +1,49 @@
 package ca.myapp.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.util.Arrays;
 
 @Entity
+@Table(name = "jobs")
 public class Job {
     @Id
-    private String id;
-    private String description;
+    @Column(name="id")
+    private Long id;
+    @Column(name="title")
+    private String title;
+    @Column(name="skills")
     private String[] skills;
 
     public Job() {
         // Default constructor
     }
 
-    public Job(String id, String description, String[] skills) {
+    public Job(Long id, String title, String[] skills) {
         this.id = id;
-        this.description = description;
+        this.title = title;
         this.skills = skills;
-    }
-
-    public static Job getById(String id) {
-        if ("1".equals(id)) {
-            return new Job("1", "Data Scientist", new String[]{"Python"});
-        } else if ("2".equals(id)) {
-            return new Job("2", "Software Engineer", new String[]{"Java"});
-        } else if ("3".equals(id)) {
-            return new Job("3", "Data Analyst", new String[]{"SQL"});
-        }
-
-        return null; // Return null if no matching Job found
     }
 
     // Getters and setters for all properties
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String[] getSkills() {
@@ -57,7 +53,23 @@ public class Job {
     public void setSkills(String[] skills) {
         this.skills = skills;
     }
+
+    @Override
+    public String toString() {
+        return "Job [id=" + id + ", title=" + title + ", skills=" + Arrays.toString(skills) + "]";
+    }
 }
+//    public static Job getById(String id) {
+//        if ("1".equals(id)) {
+//            return new Job("1", "Data Scientist", new String[]{"Python"});
+//        } else if ("2".equals(id)) {
+//            return new Job("2", "Software Engineer", new String[]{"Java"});
+//        } else if ("3".equals(id)) {
+//            return new Job("3", "Data Analyst", new String[]{"SQL"});
+//        }
+//
+//        return null; // Return null if no matching Job found
+//    }
 
 //public record Job(String id, String description, String[] skills) {
 //

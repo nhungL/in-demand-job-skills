@@ -2,7 +2,6 @@ package ca.myapp;
 
 import ca.myapp.resolvers.JobResolver;
 import graphql.GraphQL;
-import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
@@ -38,7 +37,9 @@ public class GraphQLConfig {
 
     private RuntimeWiring buildRuntimeWiring() {
         return RuntimeWiring.newRuntimeWiring()
-                .type("Query", builder -> builder.dataFetcher("getJob", (DataFetcher) jobResolver))
+                .type("Query", builder -> builder
+                        .dataFetcher("jobById", jobResolver::jobById)
+                        .dataFetcher("getAllJobs", jobResolver::getAllJobs))
                 .build();
     }
 

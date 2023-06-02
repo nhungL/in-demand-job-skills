@@ -1,22 +1,39 @@
 package ca.myapp.controllers;
 
 import ca.myapp.models.Job;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
+import ca.myapp.repositories.JobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class JobController {
-    @QueryMapping
-    public Job jobById(@Argument String id) {
-        return Job.getById(id);
+    @Autowired
+    JobRepository jobRepository;
+
+    @GetMapping("/all-jobs")
+    public ResponseEntity<List<Job>> getAllJobs() {
+        try {
+            List<Job> jobs = new ArrayList<Job>(jobRepository.findAll());
+            return new ResponseEntity<>(jobs, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @QueryMapping
-    public List<Job> getAllJobs() {
-        return new LinkedList<Job>();
+    @GetMapping("/all-jobs/{id}")
+    public ResponseEntity<Job> jobById(@PathVariable Long id) {
+        try {
+            Job job = jobRepository.findById(id).orElse(null);
+            return new ResponseEntity<>(job, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
