@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
-public class JobController {
+public class RestJobController {
     @Autowired
     JobRepository jobRepository;
 

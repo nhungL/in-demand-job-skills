@@ -59,30 +59,3 @@ public class Job {
         return "Job [id=" + id + ", title=" + title + ", skills=" + Arrays.toString(skills) + "]";
     }
 }
-//    public static Job getById(String id) {
-//        if ("1".equals(id)) {
-//            return new Job("1", "Data Scientist", new String[]{"Python"});
-//        } else if ("2".equals(id)) {
-//            return new Job("2", "Software Engineer", new String[]{"Java"});
-//        } else if ("3".equals(id)) {
-//            return new Job("3", "Data Analyst", new String[]{"SQL"});
-//        }
-//
-//        return null; // Return null if no matching Job found
-//    }
-
-//public record Job(String id, String description, String[] skills) {
-//
-//    private static List<Job> jobs = Arrays.asList(
-//            new Job("1", "Data Scientist",new String[]{"Python"}),
-//            new Job("2", "Software Engineer", new String[]{"author-2"}),
-//            new Job("3", "Data Analyst", new String[]{"job 3 skill set"})
-//    );
-//
-//    public static Job getById(String id) {
-//        return jobs.stream()
-//                .filter(job -> job.id().equals(id))
-//                .findFirst()
-//                .orElse(null);
-//    }
-//}

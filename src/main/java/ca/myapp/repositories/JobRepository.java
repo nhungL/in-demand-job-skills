@@ -11,9 +11,5 @@ import org.springframework.stereotype.Repository;
 @EntityScan(basePackages = "ca.myapp.models")
 public interface JobRepository extends JpaRepository<Job, Long> {
     // Add custom query methods if needed
-//    @Query(value = "select * from jobs where id = id")
-//    List<Job> jobById(String id);
-//    @Query(value = "select * from jobs")
-//    List<Job> getAllJobs();
 }
 
