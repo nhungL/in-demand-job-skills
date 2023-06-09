@@ -3,10 +3,15 @@ package ca.myapp.controllers;
 import ca.myapp.models.Job;
 import ca.myapp.repositories.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +21,12 @@ import java.util.List;
 public class RestJobController {
     @Autowired
     JobRepository jobRepository;
+
+    @GetMapping("/")
+    public String index() throws IOException {
+        Resource resource = new ClassPathResource("static/index.html");
+        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+    }
 
     @GetMapping("/all-jobs")
     public ResponseEntity<List<Job>> getAllJobs() {
