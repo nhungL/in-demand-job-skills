@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="a052e462-6749-4485-acb0-0fe5b075f83d" name="postgres Mapping">
+      <data-sources db="123680d1-ab9b-4243-854f-95a5fc5454b1" ddl="655bd006-8825-4664-bae5-0626f244386b" />
+      <scope>
+        <node kind="database" qname="jobs_all" />
+      </scope>
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="655bd006-8825-4664-bae5-0626f244386b" />
+          <option name="name" value="postgres@localhost (DDL)" />
+          <option name="dbmsName" value="POSTGRES" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/src/main/resources/application.properties" />
+              <option value="file://$PROJECT_DIR$/src/main/resources/secrets.properties" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
