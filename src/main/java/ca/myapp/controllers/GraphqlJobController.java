@@ -2,8 +2,8 @@ package ca.myapp.controllers;
 
 import ca.myapp.models.Job;
 import ca.myapp.repositories.JobRepository;
-import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -20,16 +20,17 @@ public class GraphqlJobController {
         try {
             return new ArrayList<Job>(jobRepository.findAll());
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     @QueryMapping
-    public Job jobById(DataFetchingEnvironment environment) {
-        Long id = Long.parseLong(environment.getArgument("id"));
-        try {
-            return jobRepository.findById(id).orElse(null);
+    public List<Job> jobByTitle(@Argument(name = "title") String title) {
+        try{
+            return new ArrayList<>(jobRepository.findByTitle(title));
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
