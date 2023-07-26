@@ -1,34 +1,65 @@
 package ca.myapp.controllers;
 
-import ca.myapp.models.Job;
+import ca.myapp.controllers.mapping.JobMapping;
+import ca.myapp.dgs.graph.schema.Job;
+import ca.myapp.entity.JobEntity;
 import ca.myapp.repositories.JobRepository;
+import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsQuery;
+import com.netflix.graphql.dgs.InputArgument;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+//@Controller
+@DgsComponent
 public class GraphqlJobController {
     @Autowired
     JobRepository jobRepository;
 
-    @QueryMapping
+//    @QueryMapping
+    @DgsQuery
     public List<Job> getAllJobs (){
         try {
-            return new ArrayList<Job>(jobRepository.findAll());
+            List<JobEntity> all_jobs = jobRepository.findAll();
+            return all_jobs.stream().map(
+                    JobMapping::mapJobEntityToJob)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @QueryMapping
-    public List<Job> jobByTitle(@Argument(name = "title") String title) {
+    @DgsQuery
+    public List<Job> jobByTitle(@InputArgument String title) {
+        if (title == null){
+            return getAllJobs();
+        }
+
         try{
-            return new ArrayList<>(jobRepository.findByTitle(title));
+            List<JobEntity> job_by_title = jobRepository.findByTitle(title);
+            return job_by_title.stream().map(
+                    JobMapping::mapJobEntityToJob)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @DgsQuery
+    public List<Job> jobByRemoteOption(@InputArgument Boolean remote) {
+        if (remote == null){
+            return getAllJobs();
+        }
+
+        try{
+            List<JobEntity> job_by_remote = jobRepository.findByRemoteOption(remote);
+            return job_by_remote.stream().map(
+                    JobMapping::mapJobEntityToJob)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
