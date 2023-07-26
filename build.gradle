@@ -2,9 +2,10 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.springframework.boot' version '3.0.6'
+    id 'org.springframework.boot' version '3.1.2'
     id 'io.spring.dependency-management' version '1.1.0'
     id "com.github.node-gradle.node" version "5.0.0"
+    id "com.netflix.dgs.codegen" version "5.12.4"
 }
 
 group = 'com.example'
@@ -54,6 +55,15 @@ processResources{
     dependsOn 'copyFrontendToBuild'
 }
 
+generateJava{
+    packageName = "ca.myapp.dgs" // The package name to use to generate sources
+    generateClientv2 = false // Enable generating the type safe query API
+    subPackageNameTypes = "graph.schema"
+//    schemaPaths = ["${projectDir}/src/main/resources/schema"]
+    generatedSourcesDir = "${projectDir}/src/main"
+}
+
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation files('python')
@@ -62,9 +72,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.h2database:h2'
     implementation 'org.postgresql:postgresql:42.5.4'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
 
+    //CLOUD GCP FOR POSTGRESQL
     implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:4.5.1')
     implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-postgresql'
+
+
+    //NETFLIX DGS
+    implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:7.3.4"))
+    implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:7.3.4'
+
+    //LOMBOK FOR @DATA
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    //TEST
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
