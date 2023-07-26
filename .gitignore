@@ -43,3 +43,6 @@ bin/
 
 ### Spring Properties ###
 secrets.properties
+
+### DGS GENERATED FILES/CLASSES###
+src/main/generated/
