@@ -1,0 +1,26 @@
+type Query {
+    getAllJobs: [Job]
+    jobByTitle(title: String): [Job]
+    jobByRemoteOption(remote: Boolean): [Job]
+}
+
+type Job {
+    id: ID!
+    jobId: String!
+    title: String!
+    companyName: String
+    location: String
+    via: String
+    description: String
+    extensions: String
+    remoteOption: Boolean
+    salary: [Float]
+    eduDegree: [String]
+    skills: [String]
+    postedAt: String
+    scheduleType: String
+}
+
+schema {
+    query: Query
+}
