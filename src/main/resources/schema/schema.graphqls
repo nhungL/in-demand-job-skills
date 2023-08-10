@@ -1,11 +1,12 @@
 type Query {
-    getAllJobs: [Job]
-    jobByTitle(title: String): [Job]
-    jobByRemoteOption(remote: Boolean): [Job]
+    getAllJobs(inputFilter: JobFilter): [Job]
+
+    allByTitle(inputFilter: TitleFilter): [Title]
+
+    getAllSkills(orderBy: SkillOrderByPercent): [Skill]
 }
 
 type Job {
-    id: ID!
     jobId: String!
     title: String!
     companyName: String
@@ -19,6 +20,46 @@ type Job {
     skills: [String]
     postedAt: String
     scheduleType: String
+}
+
+type Title {
+    title: String!
+    minSalary: Float
+    maxSalary: Float
+    avgSalary: Float
+    count: Float
+    topSkills: [Skill]
+    eduDegree: [Degree]
+}
+
+type Skill {
+    skill: String
+    count: Int
+    percent: Float
+}
+
+type Degree {
+    degree: String
+    count: Int
+    percent: Float
+}
+
+input JobFilter {
+    title: String
+    remoteOption: Boolean
+    scheduleType: String
+}
+
+input TitleFilter {
+    title: String
+}
+
+input SkillOrderByPercent {
+    percent: Sort
+}
+enum Sort {
+    asc
+    desc
 }
 
 schema {
