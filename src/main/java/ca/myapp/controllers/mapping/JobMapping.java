@@ -4,6 +4,9 @@ import ca.myapp.dgs.graph.schema.Job;
 import ca.myapp.entity.JobEntity;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JobMapping {
     public static Job mapJobEntityToJob(@NotNull JobEntity jobEntity) {
         Job job = new Job();
@@ -15,11 +18,33 @@ public class JobMapping {
         job.setDescription(jobEntity.getDescription());
         job.setExtensions(jobEntity.getExtensions());
         job.setRemoteOption(jobEntity.getRemoteOption());
-        job.setSalary(jobEntity.getSalary()); // Assuming Salary is a property of the JobEntity class
-        job.setEduDegree(jobEntity.getEduDegree());
-        job.setSkills(jobEntity.getSkills());
+        job.setSalary(jobEntity.getSalary());
+
+        job.setEduDegree(reformatString(jobEntity.getEduDegree()));
+
+        List<String> formattedSkills = reformatString(jobEntity.getSkills());
+        job.setSkills(formattedSkills);
+
         job.setPostedAt(jobEntity.getPostedAt());
         job.setScheduleType(jobEntity.getScheduleType());
         return job;
+    }
+
+    @NotNull
+    private static List<String> reformatString(List<String> stringList) {
+        List<String> formattedStringList = new ArrayList<>();
+        if (stringList != null) {
+            for (String string : stringList) {
+                if (!string.isEmpty()) {
+                    String format = string.replace("'", "");
+                    if (!format.isEmpty()) {
+                        String formattedString = format.substring(0, 1).toUpperCase()
+                                                + format.substring(1).toLowerCase();
+                        formattedStringList.add(formattedString);
+                    }
+                }
+            }
+        }
+        return formattedStringList;
     }
 }
