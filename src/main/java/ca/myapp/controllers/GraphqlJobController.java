@@ -2,6 +2,7 @@ package ca.myapp.controllers;
 
 import ca.myapp.controllers.mapping.JobMapping;
 import ca.myapp.dgs.graph.schema.Job;
+import ca.myapp.dgs.graph.schema.JobFilter;
 import ca.myapp.entity.JobEntity;
 import ca.myapp.repositories.JobRepository;
 import com.netflix.graphql.dgs.DgsComponent;
@@ -9,7 +10,9 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 //@Controller
@@ -18,47 +21,38 @@ public class GraphqlJobController {
     @Autowired
     JobRepository jobRepository;
 
-//    @QueryMapping
     @DgsQuery
-    public List<Job> getAllJobs (){
-        try {
-            List<JobEntity> all_jobs = jobRepository.findAll();
-            return all_jobs.stream().map(
-                    JobMapping::mapJobEntityToJob)
+    public List<Job> getAllJobs(@InputArgument("inputFilter")JobFilter inputFilter) {
+        if (inputFilter == null){
+            List<JobEntity> allJobs = jobRepository.findAll();
+            return allJobs.stream().map(
+                            JobMapping::mapJobEntityToJob)
                     .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @DgsQuery
-    public List<Job> jobByTitle(@InputArgument String title) {
-        if (title == null){
-            return getAllJobs();
         }
 
         try{
-            List<JobEntity> job_by_title = jobRepository.findByTitle(title);
-            return job_by_title.stream().map(
-                    JobMapping::mapJobEntityToJob)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+            String title = inputFilter.getTitle();
+            Boolean remote = inputFilter.getRemoteOption();
+            String workType = inputFilter.getScheduleType();
 
-    @DgsQuery
-    public List<Job> jobByRemoteOption(@InputArgument Boolean remote) {
-        if (remote == null){
-            return getAllJobs();
-        }
+            // Create a list of predicates to apply filters
+            List<Predicate<Job>> predicates = new ArrayList<>();
 
-        try{
-            List<JobEntity> job_by_remote = jobRepository.findByRemoteOption(remote);
-            return job_by_remote.stream().map(
-                    JobMapping::mapJobEntityToJob)
+            if (title != null) {
+                predicates.add(job -> job.getTitle().equals(title));
+            }
+
+            if (remote != null) {
+                predicates.add(job -> job.getRemoteOption().equals(remote));
+            }
+
+            if (workType != null) {
+                predicates.add(job -> job.getScheduleType().equals(workType));
+            }
+
+            List<Job> allJobs = jobRepository.findAll().stream().map(JobMapping::mapJobEntityToJob).toList();
+
+            return allJobs.stream().filter(job -> predicates.stream().allMatch(p -> p.test(job)))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
