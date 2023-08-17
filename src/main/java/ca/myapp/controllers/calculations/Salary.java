@@ -44,14 +44,16 @@ public class Salary {
 
     public static Map<String, Double> calAvgSalary(List<JobEntity> jobEntities) {
         return jobEntities.stream()
-                .filter(job -> job.getSalary() != null)
+                .filter(job -> job.getSalary() != null && job.getSalary().size() == 2)
                 .collect(Collectors.groupingBy(JobEntity::getTitle,
                         Collectors.averagingDouble(job -> calculateAverage(job.getSalary()))
                 ));
     }
 
-    public static double calculateAverage(List<Double> salaries){
-        double sum = salaries.stream().mapToDouble(Double::doubleValue).sum();
-        return sum / salaries.size();
+    public static double calculateAverage(List<Double> salaryRange){
+        double minSalary = salaryRange.get(0);
+        double maxSalary = salaryRange.get(1);
+
+        return (minSalary + maxSalary) / 2;
     }
 }

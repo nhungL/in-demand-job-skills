@@ -47,6 +47,12 @@ public class Skills {
         return skillsByTitleMap;
     }
 
+    /**
+    * function: listOfSKillsByTitle
+     *
+    * @param allJobs: List of Job objects
+    * @return Map< String title, List<String> list of skills of that title>
+    **/
     public static Map<String, List<String>> listOfSkillsByTitle(List<Job> allJobs){
         Map<String, List<String>> listOfSkills = new HashMap<>();
         for (Job job : allJobs) {

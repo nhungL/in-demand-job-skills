@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class JobCount {
+public class Count {
     public static Map<String, Long> countJobsByTitle(List<JobEntity> jobEntities) {
         return jobEntities.stream()
                 .collect(Collectors.groupingBy(JobEntity::getTitle,
@@ -14,9 +14,9 @@ public class JobCount {
                 );
     }
 
-    public static void countSkillOccurrences(Map<String, Integer> map, List<String> skillsList) {
-        for (String skill : skillsList) {
-            map.put(skill, map.getOrDefault(skill, 0) + 1);
+    public static void countOccurrences(Map<String, Integer> map, List<String> myList) {
+        for (String item : myList) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
         }
     }
 }
