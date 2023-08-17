@@ -72,6 +72,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.5.4'
     implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.1.2'
 
     //CLOUD GCP FOR POSTGRESQL
     implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:4.5.1')
@@ -82,7 +83,7 @@ dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:7.3.4"))
     implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:7.3.4'
 
-    //LOMBOK FOR @DATA
+    //LOMBOK
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
@@ -92,6 +93,9 @@ dependencies {
 
     testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
 }
 
 tasks.named('test') {
