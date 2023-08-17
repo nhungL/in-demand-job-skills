@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ca.myapp.controllers.calculations.JobCount.countSkillOccurrences;
+import static ca.myapp.controllers.calculations.Count.countOccurrences;
 import static ca.myapp.controllers.calculations.Skills.calSkillsPercent;
 import static ca.myapp.controllers.calculations.Skills.listOfSkillsByTitle;
 
@@ -26,6 +26,10 @@ import static ca.myapp.controllers.calculations.Skills.listOfSkillsByTitle;
 public class SkillController {
     @Autowired
     JobRepository jobRepository;
+
+    public SkillController() {
+        System.out.println("DGS Skill Controller");
+    }
     @DgsQuery
     public List<Skill> getAllSkills(@InputArgument("orderBy") SkillOrderByPercent orderBy) {
         try {
@@ -37,7 +41,7 @@ public class SkillController {
             Map<String, Integer> uniqueSkills = new HashMap<>();
 
             for (String title : listOfSkills.keySet()) {
-                countSkillOccurrences(uniqueSkills, listOfSkills.get(title));
+                countOccurrences(uniqueSkills, listOfSkills.get(title));
             }
 
 
@@ -57,9 +61,11 @@ public class SkillController {
             if (orderBy != null && orderBy.getPercent() != null) {
                 Sort order = orderBy.getPercent();
                 if (order == Sort.asc) {
-                    skillEntityList.sort(Comparator.comparing(SkillEntity::getPercent));
+                    skillEntityList.sort(Comparator.comparing(SkillEntity::getPercent) //sort by percent
+                            .thenComparing(SkillEntity::getSkill)); //then sort skill by alphabet
                 } else if (order == Sort.desc) {
-                    skillEntityList.sort(Comparator.comparing(SkillEntity::getPercent).reversed());
+                    skillEntityList.sort(Comparator.comparing(SkillEntity::getPercent).reversed()
+                            .thenComparing(SkillEntity::getSkill));
                 }
             }
 
