@@ -9,11 +9,10 @@ import com.netflix.graphql.dgs.client.WebClientGraphQLClient;
 import org.intellij.lang.annotations.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -28,7 +27,8 @@ import static org.mockito.Mockito.when;
 *       Test using JobController queries with filter and no filter
 * REQUIREMENT: need to run Cloud SQL instance
 * */
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
+@Profile("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
 public class WebLayerTest {
     private WebClientGraphQLClient monoGraphQLClient;
