@@ -73,6 +73,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.5.4'
     implementation 'javax.persistence:javax.persistence-api:2.2'
     implementation 'org.springframework.boot:spring-boot-starter-webflux:3.1.2'
+    implementation 'com.h2database:h2'
 
     //CLOUD GCP FOR POSTGRESQL
     implementation platform('com.google.cloud:spring-cloud-gcp-dependencies:4.5.1')
