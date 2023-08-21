@@ -2,6 +2,7 @@ package ca.myapp.controllers;
 
 import ca.myapp.Application;
 import ca.myapp.MockData;
+import ca.myapp.config.H2JpaConfig;
 import ca.myapp.repositories.JobRepository;
 import com.netflix.graphql.dgs.client.GraphQLResponse;
 import com.netflix.graphql.dgs.client.MonoGraphQLClient;
@@ -9,10 +10,11 @@ import com.netflix.graphql.dgs.client.WebClientGraphQLClient;
 import org.intellij.lang.annotations.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -25,11 +27,10 @@ import static org.mockito.Mockito.when;
 * NAME: Web Layer Testing
 * GOAL: Try to access graphql endpoint and get data from bean (mock data)
 *       Test using JobController queries with filter and no filter
-* REQUIREMENT: need to run Cloud SQL instance
 * */
-//@ExtendWith(MockitoExtension.class)
-@Profile("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = { Application.class, H2JpaConfig.class})
 public class WebLayerTest {
     private WebClientGraphQLClient monoGraphQLClient;
 
