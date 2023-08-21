@@ -8,7 +8,7 @@ plugins {
     id "com.netflix.dgs.codegen" version "5.12.4"
 }
 
-group = 'com.example'
+group = 'com.gradle1'
 version = '0.0.1-SNAPSHOT'
 java.sourceCompatibility = JavaVersion.VERSION_17
 
