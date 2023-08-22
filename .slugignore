@@ -2,10 +2,7 @@
 *.log
 *.tmp
 *.bak
-<<<<<<< HEAD
-=======
 .m2
->>>>>>> 9fa98a8 (reduce slug size)
 
 # Ignore unnecessary directories
 node_modules/
@@ -15,30 +12,17 @@ dist/
 docs/
 tmp/
 vendor/
-<<<<<<< HEAD
-
-# Ignore specific files
-config/local.yml
-test/
-=======
 python/
 src/test/
 
 # Ignore specific files
 config/local.yml
->>>>>>> 9fa98a8 (reduce slug size)
 
 # Ignore version control and system files
 .git/
 .svn/
 .DS_Store
 
-<<<<<<< HEAD
-# Ignore python files
-python/
-=======
 # Ignore
 .idea/
 .gradle/
-.DS_Store
->>>>>>> 9fa98a8 (reduce slug size)
