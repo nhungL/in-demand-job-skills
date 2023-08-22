@@ -27,6 +27,10 @@ node {
 //    nodeModulesDir = file("${project.projectDir}/src/main/frontend")
 }
 
+npmSetup.onlyIf {
+    !npmSetup.npmDir.exists()
+}
+
 tasks.register('npmInstallDependencies', NpmTask) {
     dependsOn('npmSetup')
     execOverrides {
