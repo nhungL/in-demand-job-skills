@@ -33,6 +33,9 @@ tasks.register('npmInstallDependencies', NpmTask) {
         it.ignoreExitValue = true
         it.workingDir = 'src/main/frontend'
     }
+    doFirst {
+        println "Running npm install in ${it.workingDir}"
+    }
     args = ['install']
 }
 
