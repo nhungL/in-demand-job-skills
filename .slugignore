@@ -2,6 +2,7 @@
 *.log
 *.tmp
 *.bak
+*.iml
 .m2
 
 # Ignore unnecessary directories
@@ -26,3 +27,5 @@ config/local.yml
 # Ignore
 .idea/
 .gradle/
+*.ipynb
+*.pyc
