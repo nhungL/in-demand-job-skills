@@ -19,7 +19,9 @@ repositories {
 
 node {
     version = '16.15.1'
+    npmVersion = '9.6.7'
 
+    download=true
 //    workDir = file("${project.projectDir}/src/main/frontend/nodejs")
 //    npmWorkDir = file("${project.projectDir}/src/main/frontend/npm")
 
@@ -27,15 +29,15 @@ node {
 //    nodeModulesDir = file("${project.projectDir}/src/main/frontend")
 }
 
-npmSetup.onlyIf {
-    !npmSetup.npmDir.exists()
-}
+//npmSetup.onlyIf {
+//    !npmSetup.npmDir.exists()
+//}
 
 tasks.register('npmInstallDependencies', NpmTask) {
     dependsOn('npmSetup')
     execOverrides {
         it.ignoreExitValue = true
-        it.workingDir = 'src/main/frontend'
+        it.workingDir = file('src/main/frontend')
     }
     doFirst {
         println "Running npm install in ${it.workingDir}"
