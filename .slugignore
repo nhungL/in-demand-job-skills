@@ -1,0 +1,25 @@
+# Ignore development-specific files
+*.log
+*.tmp
+*.bak
+
+# Ignore unnecessary directories
+node_modules/
+bower_components/
+build/
+dist/
+docs/
+tmp/
+vendor/
+
+# Ignore specific files
+config/local.yml
+test/
+
+# Ignore version control and system files
+.git/
+.svn/
+.DS_Store
+
+# Ignore python files
+python/
