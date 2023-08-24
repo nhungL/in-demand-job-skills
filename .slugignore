@@ -6,7 +6,8 @@
 .m2
 
 # Ignore unnecessary directories
-node_modules/
+src/main/frontend/node_modules/
+src/main/frontend/build/
 bower_components/
 build/
 dist/
