@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DdlMappings">
-    <mapping uuid="a052e462-6749-4485-acb0-0fe5b075f83d" name="postgres Mapping">
-      <data-sources db="123680d1-ab9b-4243-854f-95a5fc5454b1" ddl="655bd006-8825-4664-bae5-0626f244386b" />
+    <mapping uuid="63a5db22-6861-4f8d-a313-5d4197449854" name="jobs_all@34.27.82.46 Mapping">
+      <data-sources db="775b6f18-7114-4f57-8bec-45fabe3ca728" />
       <scope>
         <node kind="database" qname="jobs_all" />
       </scope>
