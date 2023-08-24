@@ -29,3 +29,5 @@ config/local.yml
 .gradle/
 *.ipynb
 *.pyc
+out/
+src/test

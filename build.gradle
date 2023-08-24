@@ -29,18 +29,11 @@ node {
 //    nodeModulesDir = file("${project.projectDir}/src/main/frontend")
 }
 
-//npmSetup.onlyIf {
-//    !npmSetup.npmDir.exists()
-//}
-
 tasks.register('npmInstallDependencies', NpmTask) {
     dependsOn('npmSetup')
     execOverrides {
         it.ignoreExitValue = true
-        it.workingDir = file('src/main/frontend')
-    }
-    doFirst {
-        println "Running npm install in ${it.workingDir}"
+        it.workingDir = 'src/main/frontend'
     }
     args = ['install']
 }
