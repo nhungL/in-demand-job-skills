@@ -30,7 +30,6 @@ config/local.yml
 *.ipynb
 *.pyc
 out/
-src/test
 src/main/frontend/src/README.md
 src/main/frontend/.git/
 src/main/generated
