@@ -32,5 +32,6 @@ config/local.yml
 out/
 src/test
 src/main/frontend/src/README.md
+src/main/frontend/.git/
 src/main/generated
 src/main/resources/just-aura-392121-1cd5b34c872e.json
