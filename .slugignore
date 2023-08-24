@@ -30,12 +30,8 @@ config/local.yml
 *.ipynb
 *.pyc
 out/
-<<<<<<< HEAD
-src/test
-=======
 src/test
 src/main/frontend/src/README.md
 src/main/generated
 src/main/frontend/public
 src/main/resources/just-aura-392121-1cd5b34c872e.json
->>>>>>> 6337d55 (reduce splug size)

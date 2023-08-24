@@ -19,7 +19,7 @@ repositories {
 
 node {
     version = '16.15.1'
-    npmVersion = '9.6.7'
+    npmVersion = '9.8.1'
 
     download=true
 //    workDir = file("${project.projectDir}/src/main/frontend/nodejs")
