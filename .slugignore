@@ -17,3 +17,14 @@ config/local.yml
 .git/
 .svn/
 .DS_Store
+
+# Ignore
+.idea/
+.gradle/
+*.ipynb
+*.pyc
+out/
+src/main/frontend/src/README.md
+src/main/frontend/.git/
+src/main/generated
+src/main/resources/just-aura-392121-1cd5b34c872e.json
