@@ -9,3 +9,11 @@ build/
 *.bak
 *.iml
 .m2
+
+# Ignore specific files
+config/local.yml
+
+# Ignore version control and system files
+.git/
+.svn/
+.DS_Store
