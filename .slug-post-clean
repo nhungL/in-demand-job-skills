@@ -1,0 +1,15 @@
+src/frontend/node_modules/
+src/frontend/build/
+
+src/test/
+
+build/bootScripts/
+build/classes/
+build/distributions/
+build/generated/
+build/resources/
+build/scripts/
+build/tmp/
+build/resolvedMainClassName
+
+just-aura-392121-1cd5b34c872e.json
