@@ -22,18 +22,18 @@ node {
     npmVersion = '9.8.1'
 
     download=true
-//    workDir = file("${project.projectDir}/src/main/frontend/nodejs")
-//    npmWorkDir = file("${project.projectDir}/src/main/frontend/npm")
+//    workDir = file("${project.projectDir}/src/frontend/nodejs")
+//    npmWorkDir = file("${project.projectDir}/src/frontend/npm")
 
 //    // Set the work directory where node_modules should be located
-//    nodeModulesDir = file("${project.projectDir}/src/main/frontend")
+//    nodeModulesDir = file("${project.projectDir}/src/frontend")
 }
 
 tasks.register('npmInstallDependencies', NpmTask) {
     dependsOn('npmSetup')
     execOverrides {
         it.ignoreExitValue = true
-        it.workingDir = 'src/main/frontend'
+        it.workingDir = 'src/frontend'
     }
     args = ['install']
 }
@@ -41,14 +41,14 @@ tasks.register('npmInstallDependencies', NpmTask) {
 tasks.register('npmBuild', NpmTask) {
     dependsOn('npmInstallDependencies')
     execOverrides {
-        it.workingDir = 'src/main/frontend'
+        it.workingDir = 'src/frontend'
     }
     args = ['run', 'build']
 }
 
 tasks.register('copyFrontendToBuild', Copy) {
     dependsOn('npmBuild')
-    from "$projectDir/src/main/frontend/build/"
+    from "$projectDir/src/frontend/build/"
 //    include "*"
     into "$buildDir/resources/main/static"
 }

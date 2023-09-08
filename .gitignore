@@ -2,7 +2,7 @@
 .idea
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
+!**/src/frontend/**/build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
@@ -14,7 +14,7 @@ build/
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
+!**/src/**/out/
 !**/src/test/**/out/
 
 ### Eclipse ###
@@ -26,7 +26,7 @@ out/
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
+!**/src/**/bin/
 !**/src/test/**/bin/
 
 ### NetBeans ###
@@ -48,3 +48,7 @@ just-aura-392121-1cd5b34c872e.json
 
 ### DGS GENERATED FILES/CLASSES###
 src/main/generated/
+
+src/frontend/node_modules/
+# production
+src/frontend/build/
