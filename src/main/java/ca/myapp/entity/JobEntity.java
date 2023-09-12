@@ -29,7 +29,7 @@ public class JobEntity {
     @Column(name = "via")
     private String via;
 
-    @Column(name = "description", length = 12000)
+    @Column(name = "description", length = 15000)
     private String description;
 
     @Column(name = "extensions")

@@ -23,8 +23,7 @@ public class Salary {
         }
         for (Job job : allJobs) {
             String title = job.getTitle();
-
-            if (job.getSalary() != null) {
+            if (job.getSalary() != null && !job.getSalary().isEmpty()) {
                 Double minValue = job.getSalary().get(0);
                 Double maxValue = job.getSalary().get(1);
 

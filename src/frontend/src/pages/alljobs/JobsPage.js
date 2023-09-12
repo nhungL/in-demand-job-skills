@@ -6,7 +6,7 @@ import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 export const JobsPage = () => {
     return (
         <div>
-            {<MiniHeader pageTitle={"Job Summaries"}/>}
+            {<MiniHeader pageTitle={"Job Summary"}/>}
             <StyledDivContainer>
                 {<JobSummaries/>}
                 {<AvgSalaryChart/>}

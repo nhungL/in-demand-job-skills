@@ -38,8 +38,9 @@ function App() {
                 <Route path="/jobs" element={<JobsPage/>}/>
                 <Route path='/skills'>
                     <Route index element={<SkillsPage/>}/>
-                    <Route path='skills-by-title' element={<SkillsByTitle/>}/>
+                    {/*<Route path='skills-by-title' element={<SkillsByTitle/>}/>*/}
                 </Route>
+                <Route path='/skills-by-title' element={<SkillsByTitle/>}/>
                 <Route path='/salary' element={<SalaryPage/>}/>
                 <Route path='/about' element={<AboutPage/>}/>
                 <Route path='/settings' element={<SettingsPage/>}/>
@@ -56,16 +57,18 @@ function App() {
 const Root = () => {
     const menuItemsList = [
         { id: 0, name: "Jobs Summary", path: "/jobs", subMenu: null, parentId: null },
-        { id: 1, name: "Skills Ranking", path: "/skills", subMenu: [
-                {
-                    id: 2,
-                    name: "Skills by Title",
-                    path: "/skills/skills-by-title",
-                    subMenu: null,
-                    parentId: 1
-                },
-            ]
+        { id: 1, name: "Skills Ranking", path: "/skills", subMenu: null
+            //     [
+            //     {
+            //         id: 2,
+            //         name: "Skills by Title",
+            //         path: "/skills/skills-by-title",
+            //         subMenu: null,
+            //         parentId: 1
+            //     },
+            // ]
         },
+        { id: 2, name: "Skills by Title", path: "/skills-by-title", subMenu: null, parentId: 1},
         { id: 3, name: "Salary Ranking", path: "/salary", subMenu: null, parentId: null },
         { id: 4, name: "About", path: "/about", subMenu: null, parentId: null },
     ];
@@ -110,16 +113,27 @@ const Root = () => {
             <StyledSubMenuList>
                 {subMenu.map((subItem) => {
                     return (
-                        <StyledSubMenuItem key={subItem.id} to={subItem.path}>
-                            <StyledSubMenuButton
+                        <div style={{display: "inline-grid"}}>
+                            <span
                                 style={{
-                                    backgroundColor: clickedItems[subItem.id] ? "rgb(218 209 190)" : "transparent",
-                                    color: clickedItems[subItem.id] ? "black" : "white",
+                                    backgroundImage: `url("icons8-up-left-hand-drawn-96.png")`,
+                                    backgroundRepeat: "no-repeat",
+                                    backgroundSize: "contain",
+                                    height: "auto",
+                                    width: "2rem",
                                 }}
-                            >
-                                {subItem.name}
-                            </StyledSubMenuButton>
-                        </StyledSubMenuItem>
+                            />
+                            <StyledSubMenuItem key={subItem.id} to={subItem.path}>
+                                <StyledSubMenuButton
+                                    style={{
+                                        backgroundColor: clickedItems[subItem.id] ? "rgb(218 209 190)" : "transparent",
+                                        color: clickedItems[subItem.id] ? "black" : "white",
+                                    }}
+                                >
+                                    {subItem.name}
+                                </StyledSubMenuButton>
+                            </StyledSubMenuItem>
+                        </div>
                     );
                 })}
             </StyledSubMenuList>

@@ -43,12 +43,11 @@ bin/
 .DS_Store
 
 ### Spring Properties ###
-secrets.properties
 just-aura-392121-1cd5b34c872e.json
 
 ### DGS GENERATED FILES/CLASSES###
 src/main/generated/
 
 src/frontend/node_modules/
-# production
 src/frontend/build/
+python/data/

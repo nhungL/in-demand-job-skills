@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "insertion_stat")
-public class InsertionDataStat {
+public class InsertionStatEntity {
     @Id
     @Column(name="insertion_id")
     private Integer insertionId;
@@ -23,7 +23,7 @@ public class InsertionDataStat {
     @Column(name="updated_at")
     private String updatedAt;
 
-    @Column(name="jobs_added")
+    @Column(name="job_added")
     private Integer jobsAdded;
 
     @Column(name="total_jobs")

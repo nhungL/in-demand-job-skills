@@ -13,6 +13,7 @@ public class SpaController {
             "/salary",
             "/about",
             "/settings",
+            "/skills-by-title",
     })
     public String index() {
         return "forward:/index.html";

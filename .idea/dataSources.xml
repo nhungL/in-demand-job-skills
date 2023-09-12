@@ -11,5 +11,13 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="data_jobs@ep-blue-haze-70399766.us-west-2.aws.neon.tech" uuid="34a80e47-eafc-48c0-95bf-be838fd569b9">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ep-blue-haze-70399766.us-west-2.aws.neon.tech/data_jobs</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

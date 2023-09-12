@@ -66,6 +66,36 @@ export const BurgerNavbar = () => {
         setOpen(!open);
     };
 
+    const handlePrint = () => {
+        // Set landscape orientation for printing
+        var css = '@page { size: landscape;}' +
+                '@media print { ' +
+                '   body {' +
+                '       -webkit-print-color-adjust: exact;' +
+                '   }' +
+                '.print-area {' +
+                '    transform: scale(0.6); ' +
+                '    transform-origin: top left; ' +
+                '  }' +
+                '}' +
+                '',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.media = 'print';
+
+        if (style.styleSheet){
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
+
+        window.print();
+    };
+
     return (
         <NavBar>
             <Menu>
@@ -82,7 +112,7 @@ export const BurgerNavbar = () => {
                     </BurgerLink>
                 </BurgerItem>
             </Menu>
-            <PrintButton onClick={() => window.print()}></PrintButton>
+            <PrintButton onClick={handlePrint}></PrintButton>
         </NavBar>
     );
 }

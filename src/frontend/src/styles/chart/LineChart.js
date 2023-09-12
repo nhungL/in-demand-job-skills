@@ -60,7 +60,7 @@ export const LineChart = ({ id, chartData, title }) => {
                                     },
                                 },
                                 legend: {
-                                    display: false
+                                    display: true
                                 },
                                 labels: {
                                     fontColor: "rgb(241 254 255)",

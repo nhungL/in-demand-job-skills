@@ -29,7 +29,7 @@ export const ScrapedDataGraph = () => {
 
     return (
         <StyledChartContainer>
-            <h4>Graph shows Scraped Data Monthly/Daily</h4>
+            <h5>Coming Update: Graph shows Scraped Data Monthly/Daily</h5>
             <LineChart id="small" chartData={chartData} title={"Average Salary By Title"}/>
         </StyledChartContainer>
     );

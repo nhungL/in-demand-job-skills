@@ -22,8 +22,7 @@ public class JobMapping {
 
         job.setEduDegree(reformatString(jobEntity.getEduDegree()));
 
-        List<String> formattedSkills = reformatString(jobEntity.getSkills());
-        job.setSkills(formattedSkills);
+        job.setSkills(jobEntity.getSkills());
 
         job.setPostedAt(jobEntity.getPostedAt());
         job.setScheduleType(jobEntity.getScheduleType());
