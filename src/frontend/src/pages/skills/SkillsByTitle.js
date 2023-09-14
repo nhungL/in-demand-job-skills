@@ -1,13 +1,28 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FetchAllTitles, FetchTitle} from "../../graphql/queries";
 import {BarChart} from "../../styles/chart/BarChart";
 import {StyledDDList, StyledDDOption, StyledDDSelect} from "../../styles/styled-components/StyledDropDown";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {MiniHeader} from "../../components/MiniHeader";
+import {Loading} from "../../components/Loading";
 
 export const SkillsByTitle = () => {
     const [selectedTitle, setSelectedTitle] = useState("Business Analyst");
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        // Update windowWidth when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const titleList = FetchAllTitles();
     const filteredData = FetchTitle(selectedTitle);
@@ -16,7 +31,7 @@ export const SkillsByTitle = () => {
     const loading = titleList.loading || filteredData.loading;
 
     if (loading) {
-        return <p>loading...</p>;
+        return <Loading/>;
     }
 
     console.log("TITLE LIST: ", titleList);
@@ -72,11 +87,15 @@ export const SkillsByTitle = () => {
         setSelectedTitle(e.target.value);
     };
 
+    const hideSidebarBreakpoint = 1200;
+
     return (
         <StyledDivContainer>
             {errors && <h3 style={{ color: 'red' }}>{errors}</h3>}
             {<MiniHeader pageTitle={"Skills By Title"}/>}
-            <StyledDivContainer style={{padding: "0 2rem 0 6rem", }}>
+            <StyledDivContainer style={{
+                padding: windowWidth <= hideSidebarBreakpoint ? "0 2rem" : "0 2rem 0 6rem",
+            }} >
                 <StyledDDList>
                     <StyledDDSelect
                             id="defData"

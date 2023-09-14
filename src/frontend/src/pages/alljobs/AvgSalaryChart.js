@@ -1,11 +1,12 @@
 import {FetchAllTitles} from "../../graphql/queries";
 import {LineChart} from "../../styles/chart/LineChart";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
+import {Loading} from "../../components/Loading";
 
 export const AvgSalaryChart = () => {
     const { loading, error, data } = FetchAllTitles();
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>;
     if (error) return <p>Error: {error.message}</p>;
 
     const dataByTitle = data.allByTitle;

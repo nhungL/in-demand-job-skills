@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
-export const StyledMenu = styled.div ({
+export const StyledSideBar = styled.div ({
     borderRight: "0.2rem solid rgb(218, 209, 190)",
     margin: "1rem 0",
     borderRadius: "0.3rem",

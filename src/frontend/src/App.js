@@ -24,11 +24,12 @@ import {
     StyledMainContainer,
 } from "./styles/styled-components/StyledMain";
 import {
-    StyledMenu,
+    StyledSideBar,
     StyledMenuButton, StyledMenuItem, StyledMenuList,
     StyledSubMenuButton, StyledSubMenuItem, StyledSubMenuList,
-} from "./styles/styled-components/StyledMenu";
+} from "./styles/styled-components/StyledSideBar";
 import {useEffect, useState} from "react";
+import {MiniHeaderBar} from "./components/MiniHeaderBar";
 
 function App() {
     const router = createBrowserRouter(
@@ -54,25 +55,25 @@ function App() {
     );
 }
 
-const Root = () => {
-    const menuItemsList = [
-        { id: 0, name: "Jobs Summary", path: "/jobs", subMenu: null, parentId: null },
-        { id: 1, name: "Skills Ranking", path: "/skills", subMenu: null
-            //     [
-            //     {
-            //         id: 2,
-            //         name: "Skills by Title",
-            //         path: "/skills/skills-by-title",
-            //         subMenu: null,
-            //         parentId: 1
-            //     },
-            // ]
-        },
-        { id: 2, name: "Skills by Title", path: "/skills-by-title", subMenu: null, parentId: 1},
-        { id: 3, name: "Salary Ranking", path: "/salary", subMenu: null, parentId: null },
-        { id: 4, name: "About", path: "/about", subMenu: null, parentId: null },
-    ];
+export const menuItemsList = [
+    { id: 0, name: "Jobs Summary", path: "/jobs", subMenu: null, parentId: null },
+    { id: 1, name: "Skills Ranking", path: "/skills", subMenu: null
+        //     [
+        //     {
+        //         id: 2,
+        //         name: "Skills by Title",
+        //         path: "/skills/skills-by-title",
+        //         subMenu: null,
+        //         parentId: 1
+        //     },
+        // ]
+    },
+    { id: 2, name: "Skills by Title", path: "/skills-by-title", subMenu: null, parentId: 1},
+    { id: 3, name: "Salary Ranking", path: "/salary", subMenu: null, parentId: null },
+    { id: 4, name: "About", path: "/about", subMenu: null, parentId: null },
+];
 
+const Root = () => {
     const totalItemsCount = menuItemsList.length + menuItemsList.reduce((total, menuItem) => {
         return total + (menuItem.subMenu ? menuItem.subMenu.length : 0);
     }, 0)
@@ -158,23 +159,47 @@ const Root = () => {
         })
     }
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        // Update windowWidth when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    // Define a breakpoint for hiding the sidebar
+    const hideSidebarBreakpoint = 1200;
+
   return (
       <StyledMainContainer>
           <StyledHeader>
               <BurgerNavbar/>
           </StyledHeader>
 
-          <StyledBodyContainer>
-              <StyledMenu>
-                  <StyledMenuList>
-                      {renderMenu()}
-                  </StyledMenuList>
-              </StyledMenu>
-
-              <StyledContent>
-                  <Outlet/>
-              </StyledContent>
-          </StyledBodyContainer>
+          {windowWidth <= hideSidebarBreakpoint ? (
+              <StyledBodyContainer>
+                  <MiniHeaderBar/>
+                  <StyledContent>
+                      <Outlet />
+                  </StyledContent>
+              </StyledBodyContainer>
+          ) : (
+              <StyledBodyContainer>
+                  <StyledSideBar>
+                      <StyledMenuList>{renderMenu()}</StyledMenuList>
+                  </StyledSideBar>
+                  <StyledContent>
+                      <Outlet />
+                  </StyledContent>
+              </StyledBodyContainer>
+          )}
       </StyledMainContainer>
   );
 }

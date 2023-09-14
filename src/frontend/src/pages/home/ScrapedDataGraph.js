@@ -1,12 +1,13 @@
 import {FetchAllTitles} from "../../graphql/queries";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {LineChart} from "../../styles/chart/LineChart";
+import {Loading} from "../../components/Loading";
 
 export const ScrapedDataGraph = () => {
 
     const {loading, error, data} = FetchAllTitles();
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>;
     if (error) return <p>Error: {error.message}</p>;
 
     const dataByTitle = data.allByTitle;
@@ -29,7 +30,7 @@ export const ScrapedDataGraph = () => {
 
     return (
         <StyledChartContainer>
-            <h5>Coming Update: Graph shows Scraped Data Monthly/Daily</h5>
+            <h5 style={{color: "#929292"}}>Coming Update: Graph shows Scraped Data Monthly/Daily</h5>
             <LineChart id="small" chartData={chartData} title={"Average Salary By Title"}/>
         </StyledChartContainer>
     );

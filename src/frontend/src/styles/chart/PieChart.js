@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 const StyledPieChart = styled.div({
-    width: "15vh",
+    width: `15vh`,
     height: "15vh",
     display: "inline-grid",
     paddingBottom: "1rem",

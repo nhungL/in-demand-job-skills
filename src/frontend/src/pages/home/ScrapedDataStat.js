@@ -37,38 +37,45 @@ export const ScrapedDataStat = () => {
 
         const date = latestStat.updatedAt;
         const { format } = require('date-fns');
-        const day = format(new Date(date.substring(0, 10)), 'MMM-dd-yyyy');
+        const day = format(new Date(date.substring(0, 10)), 'MMM/dd/yyyy');
         const hour = date.substring(11, 16);
-        statData.push(hour);
+        statData.push(hour.concat(" UTC"));
         statData.push(latestStat.jobsAdded);
         statData.push(latestStat.totalJobs);
 
-        statTrends.push(day + " UTC");
+        statTrends.push(day);
+        let jobsAddedTrend = 0;
+        let totalJobsTrend = 0;
         if (insertionStat.length > 1) {
             const prevStat = insertionStat[insertionStat.length - 2];
-            const jobsAddedTrend = ((latestStat.jobsAdded/ prevStat.jobsAdded)*100).toFixed(1)
-            statTrends.push(`${jobsAddedTrend}`);
-            const totalJobsTrend = ((latestStat.totalJobs/ prevStat.totalJobs)*100).toFixed(1)
-            statTrends.push(`${totalJobsTrend}`);
+            if (prevStat.jobsAdded > 0) {
+                jobsAddedTrend = ((latestStat.jobsAdded/ prevStat.jobsAdded)*100).toFixed(1)
+            }
+            totalJobsTrend = ((latestStat.jobsAdded/ prevStat.totalJobs)*100).toFixed(1)
         }
-        else{
-            statTrends.push("-100");
-            statTrends.push("100");
-        }
+        statTrends.push(`${jobsAddedTrend}`);
+        statTrends.push(`${totalJobsTrend}`);
     }
 
-    const statNames = ["Last Updated", "New Jobs Today", "Total Jobs Queried"];
+    const statNames = ["Last Updated", "New Jobs Added", "Total Jobs Collected"];
 
 
     return (
         <StyledDivContainer style={{padding: "0 1rem", marginBottom: "2rem",}}>
             <StyledDivContainer>
-                <h3>Collected Data Stats</h3>
+                <h3 style={{
+                    padding: "0.2rem 0",
+                    borderBottom: "2px solid rgb(164, 153, 131)",
+                    borderTop: "2px solid rgb(164, 153, 131)",
+                    boxShadow: "rgb(164, 153, 131) 0px 0px 20px 0px inset",
+                }}>
+                    Collected Data Stats
+                </h3>
                 <StyledTableContainer>
                     <StyledTableHeader>
                         <tr>
                             {statNames.map((item) => (
-                                <th key={item} style={{color: "rgb(173 148 102)",}}>
+                                <th key={item} style={{color: "rgb(218 209 190)",}}>
                                     {item}
                                 </th>
                             ))}
@@ -82,7 +89,7 @@ export const ScrapedDataStat = () => {
                                 </td>
                             ))}
                         </tr>
-                        <tr style={{color: "rgb(173 148 102)", fontSize: "20px"}}>
+                        <tr style={{color: "rgb(185,176,164)", fontSize: "20px"}}>
                             {statTrends.map((data) => (
                                 <td key={data}>
                                     {isNumber(data) ? (

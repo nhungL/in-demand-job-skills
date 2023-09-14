@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
-import {StyledSubMenuButton} from "../styles/styled-components/StyledMenu";
+import {Link, useLocation} from "react-router-dom";
+import {StyledSubMenuButton} from "../styles/styled-components/StyledSideBar";
 
 const NavBar = styled.nav({
     padding: "0 1rem",
@@ -10,7 +10,7 @@ const NavBar = styled.nav({
     justifyContent: "space-between",
 });
 
-const Menu = styled.ul({
+const Menu = styled.div({
     listStyle: "none",
     display: "flex",
     justifyContent: "space-between",
@@ -18,7 +18,9 @@ const Menu = styled.ul({
     gap: "2rem",
 });
 
-const BurgerItem = styled.li({
+const BurgerItem = styled.div({
+    listStyle: "none",
+    padding: "0.5rem 0.7rem 1rem 0.5rem",
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
 
@@ -29,7 +31,6 @@ const BurgerItem = styled.li({
 
 export const BurgerLink = styled(Link) ({
     textDecoration: "none",
-    color: "black",
     textTransform: "uppercase",
     fontSize: "1.1rem",
     fontWeight: 500,
@@ -60,12 +61,6 @@ export const StyledIcon = styled.img ({
 });
 
 export const BurgerNavbar = () => {
-    const [open, setOpen] = useState(false);
-
-    const toggleMenu = () => {
-        setOpen(!open);
-    };
-
     const handlePrint = () => {
         // Set landscape orientation for printing
         var css = '@page { size: landscape;}' +
@@ -96,22 +91,38 @@ export const BurgerNavbar = () => {
         window.print();
     };
 
+    const navItems = [
+        {id: 1, name: "HOME", path: "/", iconSrc:"/icons8-home-96.png", iconSrcActive:"icons8-home-96-white.png"},
+        {id: 2, name: "SETTINGS", path: "/settings", iconSrc: "/icons8-setting-96.png", iconSrcActive:"icons8-setting-96-white.png"}
+    ]
+
+    const location = useLocation();
+    const isPathActive = (path) => location.pathname === path;
+
     return (
         <NavBar>
             <Menu>
-                <BurgerItem>
-                    <BurgerLink to='/'>
-                        <StyledIcon src="/icons8-home-96.png" alt="Home" />
-                        Home
-                    </BurgerLink>
-                </BurgerItem>
-                <BurgerItem>
-                    <BurgerLink to='/settings'>
-                        <StyledIcon src="/icons8-setting-96.png" alt="Settings" />
-                        Settings
-                    </BurgerLink>
-                </BurgerItem>
+                {navItems.map((item) => {
+                    return (
+                        <BurgerItem key={item.id} style={{
+                            backgroundColor: isPathActive(item.path) ? "#05130f" : "transparent",
+                            borderTopLeftRadius: isPathActive(item.path) ? "0.5rem" : "0",
+                            borderTopRightRadius: isPathActive(item.path) ? "0.5rem" : "0",
+                            borderTop: isPathActive(item.path) ? "4px solid rgb(187 38 1)" : "4px solid transparent",
+                        }}>
+                            <BurgerLink to={item.path} style={{
+                                color: isPathActive(item.path) ? "#dad1bf" : "black",
+                            }}>
+                                <StyledIcon
+                                    src={ isPathActive(item.path) ? item.iconSrcActive : item.iconSrc}
+                                    alt={item.name} />
+                                {item.name}
+                            </BurgerLink>
+                        </BurgerItem>
+                    )
+                })}
             </Menu>
+
             <PrintButton onClick={handlePrint}></PrintButton>
         </NavBar>
     );

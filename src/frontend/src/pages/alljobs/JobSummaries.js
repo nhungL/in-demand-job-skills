@@ -3,8 +3,10 @@ import {StyledChartContainer} from "../../styles/styled-components/StyledCharts"
 import {PieChart} from "../../styles/chart/PieChart";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import styled from "styled-components";
+import {Loading} from "../../components/Loading";
 
 const StyledTableContainer = styled.table ({
+    borderCollapse: "collapse",
     height: "30vh",
     width: "-webkit-fill-available",
 });
@@ -31,7 +33,7 @@ const StyledData = styled.div ({
 export const JobSummaries = () => {
     const titleData = FetchAllTitles();
 
-    if (titleData.loading) return <p>Loading...</p>;
+    if (titleData.loading) return <Loading/>;
     if (titleData.error) return <p>Error : {titleData.error.message}</p>;
 
     const dataByTitle = titleData?.data.allByTitle;
@@ -40,9 +42,9 @@ export const JobSummaries = () => {
     const titleList = dataByTitle.map((data) => data.title)
 
     const degreeColors = {
-        Bachelor: '#eab59b',
-        Master: '#eaa628',
-        Doctorate: '#b6643f',
+        Bachelor: 'rgb(252,185,146)',
+        Master: 'rgb(188,96,96)',
+        Doctorate: 'rgb(192,75,75)',
     };
     const DegreeLegend = ({ degree }) => {
         return (
@@ -67,7 +69,7 @@ export const JobSummaries = () => {
                     label: "Top 10 Skills",
                     data: data,
                     backgroundColor: colors,
-                    borderColor: "rgb(164, 153, 131)",
+                    borderColor: "rgb(255,244,228)",
                     borderWidth: 1,
                 },
             ],
@@ -80,7 +82,7 @@ export const JobSummaries = () => {
 
     return (
         <StyledDivContainer style={{padding: "0 1rem", marginBottom: "2rem", }}>
-            <StyledDivContainer>
+            <StyledDivContainer style={{overflow: "auto"}}>
                 <StyledTableContainer>
                     <StyledTableHeader>
                         <tr>

@@ -3,12 +3,29 @@ import {StyledChartContainer} from "../../styles/styled-components/StyledCharts"
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {MiniHeader} from "../../components/MiniHeader";
 import {LineChart} from "../../styles/chart/LineChart";
+import {Loading} from "../../components/Loading";
+import {useEffect, useState} from "react";
 
 export const SalaryPage = () => {
 
     const { loading, error, data } = FetchAllTitles();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-    if (loading) return <p>Loading...</p>;
+    useEffect(() => {
+        // Update windowWidth when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+    const hideSidebarBreakpoint = 1200;
+
+    if (loading) return (<Loading/>);
     if (error) return <p>Error: {error.message}</p>;
 
     const dataByTitle = data.allByTitle;
@@ -54,8 +71,10 @@ export const SalaryPage = () => {
 
     return (
         <div>
-            {<MiniHeader pageTitle={"Salaries"}/>}
-            <StyledDivContainer style={{padding: "0 2rem 0 4rem"}}>
+            {<MiniHeader pageTitle={"Salary Ranking"}/>}
+            <StyledDivContainer style={{
+                padding: windowWidth <= hideSidebarBreakpoint ? "0 2rem" : "0 2rem 0 4rem",
+            }} >
                 <StyledChartContainer>
                     <LineChart chartData={chartData} title={"Salaries By Title"}/>
                 </StyledChartContainer>

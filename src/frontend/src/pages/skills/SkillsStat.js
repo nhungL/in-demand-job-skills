@@ -4,6 +4,7 @@ import {BarChart} from "../../styles/chart/BarChart";
 import {useState} from "react";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
+import {Loading} from "../../components/Loading";
 
 export const SkillsStat = () => {
     const [numDataPoints, setNumDataPoints] = useState(10);
@@ -11,7 +12,7 @@ export const SkillsStat = () => {
     const { loading, error, data } = useQuery(SKILL_QUERIES,
                                                             {variables:  {order: 'desc'}});
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>;
     if (error) return <p>Error : {error.message}</p>;
     console.log("SKILL Query - ALL:", data);
 
