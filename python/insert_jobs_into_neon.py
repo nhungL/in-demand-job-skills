@@ -18,11 +18,24 @@ def connect_to_database():
     cur = conn.cursor()
     return conn
 
+def delete_tables(conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute("DROP TABLE IF EXISTS jobs_all");
+        cursor.execute("DROP TABLE IF EXISTS insertion_stat");
+
+        conn.commit()
+        cursor.close()
+        print(f"Delete tables successfully")
+    except psycopg2.Error as e:
+        print("Insertion error:", e)
+        conn.rollback()
+
+
 # Function to insert job data into the database
 def insert_job_data(conn, job_data, success_count):
     try:
         cursor = conn.cursor()
-        # cursor.execute("DROP TABLE IF EXISTS jobs_all")
 
         # Create table if not exist
         create_table_jobs_all = """
@@ -89,9 +102,11 @@ def update_insertion_data(conn, success_count):
         # Get the current timestamp
         cursor.execute('SELECT NOW();')
         current_time = cursor.fetchone()[0]
+
         # Get total jobs from table jobs_all
         cursor.execute("SELECT COUNT(*) AS total_jobs FROM jobs_all;")
         total_jobs = cursor.fetchone()[0]
+
         # Insert data into the table using SQL parameters (%s)
         insert_data_into_insertion_stat = """
             INSERT INTO insertion_stat (updated_at, job_added, total_jobs)
@@ -128,8 +143,11 @@ def main():
         success_count = insert_job_data(conn, row.to_dict(), success_count)
 
     print(f"Total new job inserted: {success_count}")
-    # if success_count != 0 :
-    update_insertion_data(conn, success_count)
+    if success_count != 0 :
+        update_insertion_data(conn, success_count)
+
+    # delete_tables(conn);
+
     # Close the database connection
     conn.close()
 

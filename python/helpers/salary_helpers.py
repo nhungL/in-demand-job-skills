@@ -70,10 +70,7 @@ def search_salary_in_desc(text):
             # print(matches)
 
             if float(min_salary) > float(max_salary):
-                if float(min_salary) <= float(max_salary)*1000:
-                    max_salary = str(float(max_salary)*1000)
-                else:
-                    return None
+                return None
 
             if pay_frequency == "year" or (len(min_salary) >= 5 and float(min_salary) <= float(max_salary)):
                 pay_frequency = "annual"
