@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {StyledDivContainer, StyledFooter} from "../../styles/styled-components/StyledMain";
 import {MiniHeader} from "../../components/MiniHeader";
+import {useEffect, useState} from "react";
 
 const StyledAboutInfo = styled.div({
     h3: {
@@ -116,6 +117,22 @@ function renderContactInfo  (){
 }
 
 export const AboutPage = () => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        // Update windowWidth when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const hideSidebarBreakpoint = 1200;
     return (
         <div>
             {<MiniHeader pageTitle={"About"}/>}
@@ -125,7 +142,10 @@ export const AboutPage = () => {
                         {renderAboutInfo()}
                     </ul>
                 </StyledDivContainer>
-                <StyledFooter>
+                <StyledFooter
+                 style={{
+                     position: windowWidth <= hideSidebarBreakpoint ? "relative" : "absolute",
+                 }}>
                     <ul style={{display: "flex"}}>
                         {renderContactInfo()}
                     </ul>

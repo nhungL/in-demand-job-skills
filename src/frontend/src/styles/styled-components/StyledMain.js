@@ -19,7 +19,6 @@ export const StyledFooter = styled.div ({
     justifyContent: "center",
     textAlign: "center",
     color: "white",
-    position: "absolute",
     bottom: "2rem",
 })
 
@@ -44,6 +43,7 @@ export const  StyledDivContainer = styled.div ({
 });
 
 export const StyledContent = styled.div ({
+    overflow: "auto",
     padding: "1rem 0",
     position: "relative",
 });
