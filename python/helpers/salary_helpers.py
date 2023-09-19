@@ -88,7 +88,7 @@ def search_salary_in_desc(text):
             if float(min_salary) > float(max_salary) or float(min_salary) == 0.0 or float(max_salary) == 0.0:
                 return None
 
-            if (len(min_salary) >= 5 and float(min_salary) <= float(max_salary)):
+            if (len(min_salary.replace('.','')) >= 5 and float(min_salary) <= float(max_salary)):
                 pay_frequency = "annual"
 
             pay_frequency = check_freg_variations(pay_frequency)

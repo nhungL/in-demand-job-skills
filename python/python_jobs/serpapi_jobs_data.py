@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from serpapi import GoogleSearch
 
-def scrape_gg_jobs_serpapi(query, search_pages):
+def scrape_gg_jobs_serpapi(query, search_pages, search_time):
     results_per_query = []
     serpapi_key = os.getenv('SERPAPI_API_KEY')
     for page in range(search_pages):
@@ -16,6 +16,7 @@ def scrape_gg_jobs_serpapi(query, search_pages):
             "gl": "us",
             "hl": "en",
             "start": start,
+            "chips": search_time,
             "api_key": serpapi_key,
         }
         search = GoogleSearch(params)
@@ -32,11 +33,11 @@ def scrape_gg_jobs_serpapi(query, search_pages):
 
     return results_per_query
 
-def search_multiple_keys(search_keys, search_pages):
+def search_multiple_keys(search_keys, search_pages, search_time):
     data_dict = {}
     for query in search_keys:
         print("SEARCH FOR: ", query)
-        jobs = scrape_gg_jobs_serpapi(query, search_pages)
+        jobs = scrape_gg_jobs_serpapi(query, search_pages, search_time)
         for job in jobs:
             if job["job_id"] not in data_dict:
                 job["search_key"] = query

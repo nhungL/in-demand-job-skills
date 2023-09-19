@@ -50,4 +50,10 @@ src/main/generated/
 
 src/frontend/node_modules/
 src/frontend/build/
+
+### Python: Byte-compiled / optimized / DLL files ###
+python/helpers/__pycache__/
+python/python_jobs/__pycache__/
+*.py[cod]
+*.pyc
 python/data/

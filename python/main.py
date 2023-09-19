@@ -9,7 +9,8 @@ from python_jobs.serpapi_jobs_data import search_multiple_keys
 def main():
     search_keys = ["Data Scientist", "Data Analyst", "Data Engineer",
                    "Business Analyst", "Software Engineer", "Machine Learning"]
-    search_pages = 2
+    search_time = "date_posted:today"
+    search_pages = 5
 
     try:
         # Connect to the database
@@ -19,7 +20,7 @@ def main():
 
         # Call Serp API and get jobs
         print("\nCalling SerpAPI ...")
-        df_jobs_serpapi = search_multiple_keys(search_keys, search_pages)
+        df_jobs_serpapi = search_multiple_keys(search_keys, search_pages, search_time)
         # df_jobs_serpapi = pd.read_csv('data/data_20230918.csv')
         print("Get jobs from SerpAPI: DONE")
 
