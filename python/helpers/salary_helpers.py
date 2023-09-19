@@ -6,6 +6,20 @@ import string
 stopwords = nltk.corpus.stopwords.words('english')
 ps = nltk.PorterStemmer()
 
+def check_freg_variations(pay_frequency):
+    freq_variations = {
+        "hour": ["hourli"],
+        "month": ["monthli"],
+        "annual": ["annually", "yearli", "year"],
+    }
+
+    for standard_term, variations in freq_variations.items():
+        if pay_frequency in variations:
+            pay_frequency = standard_term
+            break
+
+    return pay_frequency
+
 '''
     Format salary string extracted from detected extensions
 '''
@@ -18,18 +32,19 @@ def format_salary_from_detected_extensions(salary_string):
         # Extract salary values and payment frequency unit
         lower_bound_str = matches.group(1).replace(',', '')
         upper_bound_str = matches.group(2).replace(',', '') if matches.group(2) else lower_bound_str
-        frequency_unit = matches.group(3).strip()
-        # print(lower_bound_str, upper_bound_str, frequency_unit)
+        pay_frequency = matches.group(3).strip()
+        # print(lower_bound_str, upper_bound_str, pay_frequency)
 
-        # Add "K" to the salary values if it's not already present
-        lower_bound_str = lower_bound_str[:-1] + "000" if lower_bound_str.endswith("K") else lower_bound_str
-        upper_bound_str = upper_bound_str[:-1] + "000" if upper_bound_str.endswith("K") else upper_bound_str
+        lower_bound_str = float(lower_bound_str[:-1]) * 1000 if lower_bound_str.endswith("K") else lower_bound_str
+        upper_bound_str = float(upper_bound_str[:-1]) * 1000 if upper_bound_str.endswith("K") else upper_bound_str
 
         # Convert salary values to integers
         lower_bound = float(lower_bound_str)
         upper_bound = float(upper_bound_str)
 
-        return [lower_bound, upper_bound, frequency_unit]
+        pay_frequency = check_freg_variations(pay_frequency)
+
+        return [lower_bound, upper_bound, pay_frequency]
     else:
         return None
 
@@ -40,7 +55,7 @@ def format_salary_from_detected_extensions(salary_string):
 '''
 def search_payment_freq(text):
     payment_freq_units = ["annual", "year", "month", "hour"]
-    keywords = ['salary', 'base pay', 'pay rate']
+    keywords = ['salary', 'base pay', 'pay rate', "compensation"]
     pay_frequency = ""
 
     text_with_salary = [line for line in text.split('\n') for word in keywords if word in line]
@@ -58,11 +73,12 @@ def search_payment_freq(text):
     Use regex to get min, max and paymnet frequency if provided
 '''
 def search_salary_in_desc(text):
-    payment_freq_units = ["annual", "year", "hour", "month"]
+    payment_freq_units = ["annual", "hour", "month"]
     text_with_salary = [line for line in text.split('\n') if '$' in line]
 
     for line in text_with_salary:
-        matches = re.findall(r'\$([\d,.]+)\s*-\s*\$([\d,.]+)\s*(?:\/\s*|per\s*)?(\w+)?', line)
+        pattern = r'\$([\d,.]+)\s*[-–—]\s*\$([\d,.]+)\s*(?:\/\s*|per\s*)?(\w+)?'
+        matches = re.findall(pattern, line)
         if matches:
             min_salary = re.sub(r'\.0+$|\.$', '', matches[0][0].replace(',', ''))
             max_salary = re.sub(r'\.0+$|\.$', '', matches[0][1].replace(',', ''))
@@ -72,8 +88,10 @@ def search_salary_in_desc(text):
             if float(min_salary) > float(max_salary) or float(min_salary) == 0.0 or float(max_salary) == 0.0:
                 return None
 
-            if pay_frequency == "year" or (len(min_salary) >= 5 and float(min_salary) <= float(max_salary)):
+            if (len(min_salary) >= 5 and float(min_salary) <= float(max_salary)):
                 pay_frequency = "annual"
+
+            pay_frequency = check_freg_variations(pay_frequency)
 
             if not pay_frequency or pay_frequency not in payment_freq_units:
                 line = clean_string(line)
