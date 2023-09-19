@@ -51,7 +51,7 @@ function renderAboutInfo  (){
             body: "Github: ",
             url: {
                 link: "https://github.com/nhungL/in-demand-job-skills",
-                text: "Source Codes",
+                text: "Source Code",
             },
         },
     ];
