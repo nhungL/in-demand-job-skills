@@ -7,7 +7,11 @@ def search_edu_degrees(row):
     mentioned_degrees = []
 
     for col in ['title', 'job_highlights', 'description']:
-        text = clean_string(row[col].lower())
+        text = ""
+        if type(row[col]) != str:
+            text = clean_string(str(row[col]).lower())
+        else:
+            text = clean_string(row[col].lower())
         for degree, keywords in degrees_keywords.items():
             if any(keyword in text for keyword in keywords):
                 if degree not in mentioned_degrees:

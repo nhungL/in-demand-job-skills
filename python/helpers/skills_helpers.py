@@ -1,5 +1,5 @@
 def get_skills_list():
-    with open('data/skillsets.txt', 'r') as file:
+    with open('python/data/skillsets.txt', 'r') as file:
         lst = file.read()
     skills_list = lst.split('\n')
     for i, skill in enumerate(skills_list):

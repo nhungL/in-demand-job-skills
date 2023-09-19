@@ -1,22 +1,4 @@
-import os
-import json
 import psycopg2
-import pandas as pd
-from dotenv import load_dotenv
-from serpapi import GoogleSearch
-from serpapi_jobs_data import search_multiple_keys
-from clean_jobs_data import preprocess_data, get_finalized_data
-
-# Load environment variables
-load_dotenv()
-
-# Function to connect to the PostgreSQL database
-def connect_to_database():
-    connection_string = os.getenv('DATABASE_URL')
-    conn = psycopg2.connect(connection_string)
-    # Create a cursor object
-    cur = conn.cursor()
-    return conn
 
 def delete_tables(conn):
     try:
@@ -125,19 +107,7 @@ def update_insertion_data(conn, success_count):
         print("Insertion error:", e)
         conn.rollback()
 
-def main():
-    search_keys = ["Data Scientist", "Data Analyst", "Data Engineer",
-                   "Business Analyst", "Software Engineer", "Machine Learning"]
-    search_pages = 4
-
-    # Connect to the database
-    conn = connect_to_database()
-
-    # df_jobs_serpapi = search_multiple_keys(search_keys, search_pages)
-    df_jobs_serpapi = pd.read_csv('data/gg_jobs_test.csv')
-    df_preprocess = preprocess_data(df_jobs_serpapi)
-    df_jobs_cleaned = get_finalized_data(df_preprocess)
-
+def insert_jobs(conn, df_jobs_cleaned):
     success_count = 0
     for index, row in df_jobs_cleaned.iterrows():
         success_count = insert_job_data(conn, row.to_dict(), success_count)
@@ -150,6 +120,3 @@ def main():
 
     # Close the database connection
     conn.close()
-
-if __name__ == "__main__":
-    main()

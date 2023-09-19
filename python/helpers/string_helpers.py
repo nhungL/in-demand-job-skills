@@ -23,6 +23,9 @@ def clean_text(desc):
     Usages: 
     - Get salary listed in detected_extensions
 '''
-def process_extensions(detected_extenstion):
-    replaced_extension = detected_extenstion.replace("'", "\"").replace("True", "true").replace("False", "false")
-    return json.loads(replaced_extension)
+def process_extensions(detected_extension):
+    if isinstance(detected_extension, str):
+        replaced_extension = detected_extension.replace("'", "\"").replace("True", "true").replace("False", "false")
+        return json.loads(replaced_extension)
+    else:
+        return detected_extension
