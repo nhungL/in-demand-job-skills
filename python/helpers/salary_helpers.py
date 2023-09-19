@@ -40,7 +40,7 @@ def format_salary_from_detected_extensions(salary_string):
 '''
 def search_payment_freq(text):
     payment_freq_units = ["annual", "year", "month", "hour"]
-    keywords = ['salary', 'base pay']
+    keywords = ['salary', 'base pay', 'pay rate']
     pay_frequency = ""
 
     text_with_salary = [line for line in text.split('\n') for word in keywords if word in line]
@@ -69,15 +69,18 @@ def search_salary_in_desc(text):
             pay_frequency = clean_string(matches[0][2])
             # print(matches)
 
-            if float(min_salary) > float(max_salary):
+            if float(min_salary) > float(max_salary) or float(min_salary) == 0.0 or float(max_salary) == 0.0:
                 return None
 
             if pay_frequency == "year" or (len(min_salary) >= 5 and float(min_salary) <= float(max_salary)):
                 pay_frequency = "annual"
 
             if not pay_frequency or pay_frequency not in payment_freq_units:
+                line = clean_string(line)
                 if search_payment_freq(line):
                     pay_frequency = search_payment_freq(line)
+                else:
+                    return None
 
             salary = [float(min_salary), float(max_salary), pay_frequency]
             return salary
