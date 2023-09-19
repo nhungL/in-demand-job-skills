@@ -56,7 +56,7 @@ def upload_data(df):
 
     # Define the auth scopes to request.
     scope = 'https://www.googleapis.com/auth/drive'
-    key_file_location = os.environ['GCP_KEY_FILE']
+    key_file_location = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
     # key_file_location = os.getenv('GCP_KEY_FILE')
     try:
         # Authenticate and construct service.
