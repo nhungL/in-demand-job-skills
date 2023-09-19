@@ -1,0 +1,84 @@
+Python
+SPSS
+PostgreSQL
+R
+Looker
+Azure
+Excel
+Shell
+Vue
+Ruby
+Unix
+PyTorch
+Spreadsheets
+Outlook
+DevOps
+PostgreSQL
+Snowflake
+Data Warehousing
+Jenkins
+.NET
+ETL
+JavaScript
+GitHub
+Java
+scikit-learn
+NLP
+ELT
+Power BI
+AI
+Visio
+SAS
+Data Pipelines
+Server
+Coding
+C
+Power BI
+Scala
+C++
+PowerPoints
+Power BI
+HTML
+Scrum
+Microsoft
+Git
+Oracle
+Express
+Kubernetes
+Twilio
+MongoDB
+Slack
+Data Warehousing
+Docker
+Spark
+Google Data Studio
+Jira
+PowerPoint
+AWS
+HTTP
+Spreadsheet
+Google Cloud
+CSS
+Word
+TCP/IP
+DNS
+Keras
+React
+Django
+SQL
+Linux
+Pandas
+TensorFlow
+SharePoint
+Ruby on Rails
+Hadoop
+GDPR
+Angular
+Alteryx
+SMTP
+MySQL
+VBA
+Tableau
+PHP
+ASP
+MSSQL

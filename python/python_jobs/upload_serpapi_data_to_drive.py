@@ -49,10 +49,9 @@ def get_data_files(service, folder_id):
 
 
 def upload_data(df):
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
+    """Access Drive v3 API.
     """
-    csv_filepath = 'python/data/csv_file.csv'
+    csv_filepath = 'python/tmp/csv_file.csv'
     df.to_csv(csv_filepath, index=False)
 
     # Define the auth scopes to request.
