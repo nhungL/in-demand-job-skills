@@ -1,6 +1,5 @@
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
-from decouple import config
 
 import pandas as pd
 import zipfile
@@ -69,8 +68,7 @@ def upload_data(df):
             key_file_location=key_file_location)
 
         # Call the Drive v3 API
-        folder_id = config('DRIVE_FOLDER_ID')
-        # folder_id = '15RnlwCkuFr5KtJqj0_kSYYN-GMb28_hL'
+        folder_id = os.getenv('DRIVE_FOLDER_ID')
         print(f'Drive Folder ID: {folder_id}')
 
         load_file_to_drive(csv_filepath, folder_id, service)
