@@ -35,16 +35,16 @@ function renderAboutInfo  (){
         },
         { id: "Technique",
             body: "The app leverages information from daily job postings retrieved from Google search results. " +
-                "The emphasis is on roles linked to data field, located in the U.S. " +
+                "The emphasis is on roles linked to data field, located in the U.S.\n" +
                 "These postings undergo analysis using a natural language processing (NLP) pipeline, " +
-                "and the outcomes are consolidated to pinpoint the key skills and median salaries for each job title.\n",
+                "and the outcomes are consolidated to pinpoint the key skills and median salaries for each job title. \n",
             url: null,
         },
         { id: "Resources",
-            body: "Job posting data is collected using SerpApi. ",
+            body: "Job posting data is collected daily.\n",
             url: {
                 link: "https://serpapi.com/google-jobs-api",
-                text: "Google Jobs API"
+                text: "Powered by SerpApi - Google Jobs API"
             },
         },
         { id: "Links",
@@ -74,7 +74,15 @@ function renderAboutInfo  (){
                     {item.url !== null && (
                         <a  href={item.url.link}
                             style={{textDecoration:"none", color: "rgb(233 148 18)", }}>
-                            {item.url.text}
+                            {item.id === "Resources" ? (
+                                <div style={{margin: "0.5rem"}}>
+                                    {item.url.text}
+                                    <div style={{marginTop: "1rem"}}>
+                                        <img alt="SerpApi" src="https://avatars.githubusercontent.com/u/34724717?s=200&v=4" width="auto" height="50px"/>
+                                    </div>
+                                </div>
+                                ) : item.url.text
+                            }
                         </a>
                     )}
                 </p>
