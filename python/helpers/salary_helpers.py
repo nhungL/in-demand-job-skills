@@ -85,6 +85,13 @@ def search_salary_in_desc(text):
             pay_frequency = clean_string(matches[0][2])
             # print(matches)
 
+            try:
+                min_val = float(min_salary)
+                max_val = float(max_salary)
+            except ValueError:
+                print("Invalid numeric string")
+                break
+
             if float(min_salary) > float(max_salary) or float(min_salary) == 0.0 or float(max_salary) == 0.0:
                 return None
 

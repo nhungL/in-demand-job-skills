@@ -21,7 +21,7 @@ def main():
         # Call Serp API and get jobs
         print("\nCalling SerpAPI ...")
         df_jobs_serpapi = search_multiple_keys(search_keys, search_pages, search_time)
-        # df_jobs_serpapi = pd.read_csv('data/data_20230918.csv')
+        # df_jobs_serpapi = pd.read_csv('python/data/data_20230919.csv')
         print("Get jobs from SerpAPI: DONE")
 
         # Upload raw data to drive
