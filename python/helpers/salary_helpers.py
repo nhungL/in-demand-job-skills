@@ -38,7 +38,7 @@ def format_salary_from_detected_extensions(salary_string):
         lower_bound_str = float(lower_bound_str[:-1]) * 1000 if lower_bound_str.endswith("K") else lower_bound_str
         upper_bound_str = float(upper_bound_str[:-1]) * 1000 if upper_bound_str.endswith("K") else upper_bound_str
 
-        # Convert salary values to integers
+        # Convert salary values to floats
         lower_bound = float(lower_bound_str)
         upper_bound = float(upper_bound_str)
 
@@ -60,7 +60,6 @@ def search_payment_freq(text):
 
     text_with_salary = [line for line in text.split('\n') for word in keywords if word in line]
     for line in text_with_salary:
-        line = clean_string(line)
         for unit in payment_freq_units:
             if unit in line:
                 pay_frequency = unit
@@ -77,7 +76,7 @@ def search_salary_in_desc(text):
     text_with_salary = [line for line in text.split('\n') if '$' in line]
 
     for line in text_with_salary:
-        pattern = r'\$([\d,.]+)\s*[-–—]\s*\$([\d,.]+)\s*(?:\/\s*|per\s*)?(\w+)?'
+        pattern = r'\$([\d,.]+)\s*[-–—]\s*\$([\d,.]+)\s*(?:\/\s*|per\s*|an\s*|a\s*)?(\w+)?'
         matches = re.findall(pattern, line)
         if matches:
             min_salary = re.sub(r'\.0+$|\.$', '', matches[0][0].replace(',', ''))
@@ -96,7 +95,10 @@ def search_salary_in_desc(text):
                 return None
 
             if (len(min_salary.replace('.','')) >= 5 and float(min_salary) <= float(max_salary)):
-                pay_frequency = "annual"
+                if len(str(round(float(min_salary)))) == 4:
+                    pay_frequency = "month"
+                else:
+                    pay_frequency = "annual"
 
             pay_frequency = check_freg_variations(pay_frequency)
 
@@ -134,5 +136,7 @@ def convert_salary(salary_lst):
         min_salary *= working_months_per_year
         max_salary *= working_months_per_year
 
+    if ('annual' == salary_lst[2] and min_salary < 15080) or min_salary < 15080:
+        return []
 
     return [min_salary, max_salary]
