@@ -1,18 +1,9 @@
-import {gql, useQuery} from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 export const FetchAllTitles = () => {
-    const { loading, error, data } = useQuery(TITLE_QUERIES);
+    const {loading, error, data} = useQuery(TITLE_QUERIES);
     if (loading) {console.log("Loading...");}
-    if (error)  {console.log("Error" + error.message);}
-    console.log("TITLE Query:", data);
-
-    return { loading, error, data };
-}
-
-export const FetchTitle = (selectedTitle) => {
-    const { loading, error, data } = useQuery(TITLE_QUERIES, {variables: { title: selectedTitle },});
-    if (loading) {console.log("Loading...");}
-    if (error)  {console.log("Error" + error.message);}
-    console.log("FILTERED TITLE Query:", data);
+    if (error)  {console.error("Error" + error.message);}
+    // console.log("FetchAllTitles:", data);
 
     return { loading, error, data };
 }

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
-import {FetchAllInsertionStats, INSERTION_DATA_QUERIES} from "../../graphql/InsertionStatQueries";
-import {useQuery} from "@apollo/client";
+import {FetchAllInsertionStats} from "../../graphql/InsertionStatQueries";
 import {isNumber} from "chart.js/helpers";
 
 const StyledTableContainer = styled.table ({

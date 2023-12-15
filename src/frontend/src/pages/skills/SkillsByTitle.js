@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {FetchAllTitles, FetchTitle} from "../../graphql/queries";
+import {FetchAllTitles} from "../../graphql/queries";
 import {BarChart} from "../../styles/chart/BarChart";
 import {StyledDDList, StyledDDOption, StyledDDSelect} from "../../styles/styled-components/StyledDropDown";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
@@ -25,27 +25,35 @@ export const SkillsByTitle = () => {
     }, []);
 
     const titleList = FetchAllTitles();
-    const filteredData = FetchTitle(selectedTitle);
+    // const filteredData = FetchTitle(selectedTitle);
 
-    const errors = titleList.error || filteredData.error;
-    const loading = titleList.loading || filteredData.loading;
+    // const errors = titleList.error || filteredData.error;
+    // const loading = titleList.loading || filteredData.loading;
+
+    const errors = titleList.error;
+    const loading = titleList.loading;
 
     if (loading) {
         return <Loading/>;
     }
 
-    console.log("TITLE LIST: ", titleList);
-
-    console.log("----QUERIES: ",filteredData);
+    // console.log("TITLE LIST: ", titleList);
 
     const skillList = [];
     const skillPercent = [];
-    const filteredByTitle = filteredData.data?.allByTitle;
-    const top10Skills = filteredByTitle[0].topSkills.slice(0, 10);
-    top10Skills.map(s => {
-        skillList.push(s.skill);
-        skillPercent.push(s.percent.toFixed(2));
-    });
+
+    let allTitles = titleList.data?.allByTitle
+
+    for (let title of allTitles) {
+        if (selectedTitle === title.title) {
+            const top10Skills = title.topSkills.slice(0, 10);
+            top10Skills.forEach(s => {
+                skillList.push(s.skill);
+                skillPercent.push(s.percent.toFixed(2));
+            });
+            break; // Stop the loop once we found the match
+        }
+    }    
 
     const chartData = {
         labels: skillList,
@@ -83,7 +91,7 @@ export const SkillsByTitle = () => {
     };
 
     const handleTitleChange = (e) => {
-        console.log("CHOSE TITLE: ", e);
+        // console.log("CHOSE TITLE: ", e);
         setSelectedTitle(e.target.value);
     };
 
