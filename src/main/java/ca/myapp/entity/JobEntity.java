@@ -11,7 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "jobs_all")
+@Table(name = "jobs_all", indexes = {
+    @Index(name = "index_title", columnList = "title", unique = false)
+})
 public class JobEntity {
     @Id
     @Column(name = "job_id", length = 4000)
