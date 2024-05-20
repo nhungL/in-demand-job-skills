@@ -1,15 +1,22 @@
 type Query {
     getAllJobs(inputFilter: JobFilter): [Job]
 
-    allByTitle(inputFilter: TitleFilter): [Title]
-
-    getAllSkills(orderBy: SkillOrderByPercent): [Skill]
+    getAllTitles(inputFilter: TitleFilter): [Title]
 
     getInsertionDataStat: [InsertionDataStat]
+
+    getOverallSkillsStat(order: OrderDirection): [Skill]
+
+    getSkillsByTitle(inputFilter: TitleFilter, order: OrderDirection): [Skill]
+
+    getDegrees(inputFilter: TitleFilter, order: OrderDirection): [Degree]
+
+    getDistinctTitles: [String]
 }
 
 type Job {
-    jobId: String!
+    jobId: Int!
+    apiJobId: String!
     title: String!
     companyName: String
     location: String
@@ -17,9 +24,6 @@ type Job {
     description: String
     extensions: String
     remoteOption: Boolean
-    salary: [Float]
-    eduDegree: [String]
-    skills: [String]
     postedAt: String
     scheduleType: String
 }
@@ -29,21 +33,27 @@ type Title {
     minSalary: Float
     maxSalary: Float
     avgSalary: Float
-    count: Float
-    topSkills: [Skill]
+    count: Int
+    top10Skills: [Skill]
     eduDegree: [Degree]
 }
 
 type Skill {
-    skill: String
-    count: Int
-    percent: Float
+    skillId: Int!
+    title: String!
+    skill: String!
+    countByTitle: Int!
+    percByTitle: Float!
+    overallPerc: Float!
 }
 
 type Degree {
-    degree: String
-    count: Int
-    percent: Float
+    degreeId: Int!
+    title: String!
+    degree: String!
+    countByTitle: Int!
+    percByTitle: Float!
+    overallPerc: Float!
 }
 
 input JobFilter {
@@ -56,8 +66,8 @@ input TitleFilter {
     title: String
 }
 
-input SkillOrderByPercent {
-    percent: Sort
+input OrderDirection {
+    direction: Sort
 }
 enum Sort {
     asc
