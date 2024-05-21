@@ -87,8 +87,9 @@ def search_salary_in_desc(text):
             try:
                 min_val = float(min_salary)
                 max_val = float(max_salary)
-            except ValueError:
-                print("Invalid numeric string")
+            except ValueError as e:
+                print("Invalid numeric string:", e)
+                return None
                 break
 
             if float(min_salary) > float(max_salary) or float(min_salary) == 0.0 or float(max_salary) == 0.0:
