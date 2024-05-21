@@ -1,5 +1,7 @@
 .gradle
 .idea
+.env
+.venv
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/frontend/**/build/
