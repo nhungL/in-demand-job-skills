@@ -1,15 +1,10 @@
 package ca.myapp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
+@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,21 +23,4 @@ public class InsertionStatEntity {
 
     @Column(name="total_jobs")
     private Integer totalJobs;
-
-
-    public void setInsertionId(Integer insertionId) {
-        this.insertionId = insertionId;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setJobsAdded(Integer jobsAdded) {
-        this.jobsAdded = jobsAdded;
-    }
-
-    public void setTotalJobs(Integer totalJobs) {
-        this.totalJobs = totalJobs;
-    }
 }

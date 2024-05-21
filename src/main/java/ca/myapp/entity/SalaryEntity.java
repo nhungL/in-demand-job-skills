@@ -9,19 +9,24 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="edu_degree")
-public class DegreeEntity {
+@Table(name="salary")
+public class SalaryEntity {
     @Id
-    @Column(name="edu_degree_id")
+    @Column(name="salary_id")
     private Integer degreeId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "job_id", nullable = false)
     private JobEntity job;
 
     @Column(name="title")
     private String title;
 
-    @Column(name="degree", nullable = false)
-    private String degree;
+    @Column(name="min_salary", nullable = false)
+    private Double minSalary;
+
+    @Column(name="max_salary", nullable = false)
+    private Double maxSalary;
 }
+
+    
