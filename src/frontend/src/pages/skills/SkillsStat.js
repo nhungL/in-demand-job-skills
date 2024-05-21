@@ -1,5 +1,4 @@
-import {useQuery} from "@apollo/client";
-import {SKILL_QUERIES} from "../../graphql/queries";
+import {FetchOverallSkillsStats} from "../../graphql/SkillQueries";
 import {BarChart} from "../../styles/chart/BarChart";
 import {useState} from "react";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
@@ -9,21 +8,21 @@ import {Loading} from "../../components/Loading";
 export const SkillsStat = () => {
     const [numDataPoints, setNumDataPoints] = useState(10);
 
-    const { loading, error, data } = useQuery(SKILL_QUERIES,
-                                                            {variables:  {order: 'desc'}});
+    const { loading, error, data } = FetchOverallSkillsStats()
 
     if (loading) return <Loading/>;
-    if (error) return <p>Error : {error.message}</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    
     console.log("SKILL Query - ALL:", data);
 
-    const dataSkills = data.getAllSkills;
+    const dataSkills = data.getOverallSkillsStat;
 
     const skillList = [];
     const skillPercent = [];
 
-    dataSkills.map((data) => {
+    dataSkills.forEach((data) => {
             skillList.push(data.skill);
-            skillPercent.push(data.percent);
+            skillPercent.push(data.overallPerc.toFixed(2));
         }
     );
 

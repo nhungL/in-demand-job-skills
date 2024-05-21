@@ -1,8 +1,8 @@
-import {FetchAllTitles} from "../../graphql/queries";
+import {FetchAllTitles} from "../../graphql/TitleQueries";
+import styled from "styled-components";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {PieChart} from "../../styles/chart/PieChart";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
-import styled from "styled-components";
 import {Loading} from "../../components/Loading";
 
 const StyledTableContainer = styled.table ({
@@ -30,13 +30,13 @@ const StyledData = styled.div ({
 
 });
 
-export const JobSummaries = () => {
-    const titleData = FetchAllTitles();
+export const JobSummaries = ({title}) => {
+    const titleData = FetchAllTitles(title);
 
     if (titleData.loading) return <Loading/>;
     if (titleData.error) return <p>Error : {titleData.error.message}</p>;
 
-    const dataByTitle = titleData?.data.allByTitle;
+    const dataByTitle = titleData?.data.getAllTitles;
     console.log("In Job Summaries: ", dataByTitle)
 
     const titleList = dataByTitle.map((data) => data.title)
@@ -56,10 +56,14 @@ export const JobSummaries = () => {
     };
 
     const chartDataList = new Map();
-    dataByTitle.map((job) => {
+    
+    dataByTitle.forEach((job) => {
         let eduData = {};
-        const labels = job.eduDegree.map((d) => d.degree);
-        const data = job.eduDegree.map((d) => d.percent);
+        const labels = job.eduDegree.map((d) => {
+            const degree = d.degree
+            return degree.charAt(0).toUpperCase() + degree.slice(1)
+        });
+        const data = job.eduDegree.map((d) => d.percByTitle);
         const colors = labels.map((label) => degreeColors[label]);
 
         eduData = {
@@ -114,7 +118,7 @@ export const JobSummaries = () => {
                                         {header === 'Job Count' && <StyledData>{job.count}</StyledData>}
                                         {header === 'Top 1 Skill' &&
                                             <StyledData>
-                                                      {job.topSkills.slice(0, 1).map((s) => s.skill)}
+                                                {job.top10Skills.slice(0, 1).map((s) => s.skill)}
                                             </StyledData>
                                         }
                                         {header === 'Degree' &&

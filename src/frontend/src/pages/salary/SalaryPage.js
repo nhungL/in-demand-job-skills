@@ -1,4 +1,4 @@
-import {FetchAllTitles} from "../../graphql/queries";
+import {FetchAllTitles} from "../../graphql/TitleQueries";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {MiniHeader} from "../../components/MiniHeader";
@@ -28,7 +28,7 @@ export const SalaryPage = () => {
     if (loading) return (<Loading/>);
     if (error) return <p>Error: {error.message}</p>;
 
-    const dataByTitle = data.allByTitle;
+    const dataByTitle = data.getAllTitles;
 
     const titleList = dataByTitle.map((data) => data.title);
     const minValue = dataByTitle.map((data) => data.minSalary);

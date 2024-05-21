@@ -1,4 +1,4 @@
-import {FetchAllTitles} from "../../graphql/queries";
+import {FetchAllTitles} from "../../graphql/TitleQueries";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {LineChart} from "../../styles/chart/LineChart";
 import {Loading} from "../../components/Loading";
@@ -10,7 +10,7 @@ export const ScrapedDataGraph = () => {
     if (loading) return <Loading/>;
     if (error) return <p>Error: {error.message}</p>;
 
-    const dataByTitle = data.allByTitle;
+    const dataByTitle = data.getAllTitles;
 
     const titleList = dataByTitle.map((data) => data.title);
     const avgSalary = dataByTitle.map((data) => data.avgSalary.toFixed(2));

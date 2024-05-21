@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
-import {FetchAllTitles} from "../../graphql/queries";
+import {GetDistinctTitles} from "../../graphql/JobQueries";
 import {BarChart} from "../../styles/chart/BarChart";
 import {StyledDDList, StyledDDOption, StyledDDSelect} from "../../styles/styled-components/StyledDropDown";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {MiniHeader} from "../../components/MiniHeader";
 import {Loading} from "../../components/Loading";
+import { FetchSkillsByTitles } from "../../graphql/SkillQueries";
 
 export const SkillsByTitle = () => {
     const [selectedTitle, setSelectedTitle] = useState("Business Analyst");
@@ -24,36 +25,30 @@ export const SkillsByTitle = () => {
         };
     }, []);
 
-    const titleList = FetchAllTitles();
-    // const filteredData = FetchTitle(selectedTitle);
+    const { loading: loadingTitles, error: errorTitles, data: titleData } = GetDistinctTitles();
+    const distinctTitles = titleData?.getDistinctTitles || [];
 
-    // const errors = titleList.error || filteredData.error;
-    // const loading = titleList.loading || filteredData.loading;
+    const { loading: loadingSkills, error: errorSkills, data: skillData } = FetchSkillsByTitles({ title: selectedTitle });
 
-    const errors = titleList.error;
-    const loading = titleList.loading;
+    if (loadingTitles || loadingSkills) return <Loading />;
+    if (errorTitles) return <p>Error: {errorTitles.message}</p>;
+    if (errorSkills) return <p>Error: {errorSkills.message}</p>;
 
-    if (loading) {
-        return <Loading/>;
-    }
+    console.log("DISTINCT TITLES:", titleData);
+    console.log("SKILL BY TITLE Query:", skillData);
 
-    // console.log("TITLE LIST: ", titleList);
+    const dataSkillsByTitle = skillData?.getSkillsByTitle || [];
 
     const skillList = [];
+    const skillCount = [];
     const skillPercent = [];
 
-    let allTitles = titleList.data?.allByTitle
-
-    for (let title of allTitles) {
-        if (selectedTitle === title.title) {
-            const top10Skills = title.topSkills.slice(0, 10);
-            top10Skills.forEach(s => {
-                skillList.push(s.skill);
-                skillPercent.push(s.percent.toFixed(2));
-            });
-            break; // Stop the loop once we found the match
+    dataSkillsByTitle.forEach((data) => {
+            skillList.push(data.skill);
+            skillCount.push(data.countBytitle);
+            skillPercent.push(data.percByTitle.toFixed(2));
         }
-    }    
+    );
 
     const chartData = {
         labels: skillList,
@@ -99,7 +94,7 @@ export const SkillsByTitle = () => {
 
     return (
         <StyledDivContainer>
-            {errors && <h3 style={{ color: 'red' }}>{errors}</h3>}
+            {errorTitles && <h3 style={{ color: 'red' }}>{errorTitles}</h3>}
             {<MiniHeader pageTitle={"Skills By Title"}/>}
             <StyledDivContainer style={{
                 padding: windowWidth <= hideSidebarBreakpoint ? "0 2rem" : "0 2rem 0 6rem",
@@ -110,9 +105,9 @@ export const SkillsByTitle = () => {
                             onChange={(e) => {handleTitleChange(e)}}
                             value={selectedTitle}
                     >
-                        {titleList.data?.allByTitle.map((data) => (
-                            <StyledDDOption key={data.title} value={data.title}>
-                                {data.title}
+                        {distinctTitles.map((title) => (
+                            <StyledDDOption key={title} value={title}>
+                                {title}
                             </StyledDDOption>
                         ))}
                     </StyledDDSelect>

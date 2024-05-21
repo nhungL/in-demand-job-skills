@@ -123,7 +123,7 @@ export const BurgerNavbar = () => {
                 })}
             </Menu>
 
-            <PrintButton onClick={handlePrint}></PrintButton>
+            {/* <PrintButton onClick={handlePrint}></PrintButton> */}
         </NavBar>
     );
 }
