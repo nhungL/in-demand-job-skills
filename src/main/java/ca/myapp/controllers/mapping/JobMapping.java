@@ -11,6 +11,7 @@ public class JobMapping {
     public static Job mapJobEntityToJob(@NotNull JobEntity jobEntity) {
         Job job = new Job();
         job.setJobId(jobEntity.getJobId());
+        job.setApiJobId(jobEntity.getApiJobId());
         job.setTitle(jobEntity.getTitle());
         job.setCompanyName(jobEntity.getCompanyName());
         job.setLocation(jobEntity.getLocation());
@@ -18,12 +19,6 @@ public class JobMapping {
         job.setDescription(jobEntity.getDescription());
         job.setExtensions(jobEntity.getExtensions());
         job.setRemoteOption(jobEntity.getRemoteOption());
-        job.setSalary(jobEntity.getSalary());
-
-        job.setEduDegree(reformatString(jobEntity.getEduDegree()));
-
-        job.setSkills(jobEntity.getSkills());
-
         job.setPostedAt(jobEntity.getPostedAt());
         job.setScheduleType(jobEntity.getScheduleType());
         return job;
