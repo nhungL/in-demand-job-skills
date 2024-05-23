@@ -8,93 +8,94 @@ import ca.myapp.dgs.graph.schema.Title;
 import ca.myapp.entity.DegreeEntity;
 import ca.myapp.entity.JobEntity;
 import ca.myapp.entity.SkillEntity;
-import ca.myapp.entity.TitleEntity;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MockData {
-    public static List<JobEntity> createMockJobEntity() {
-        return Arrays.asList(
-                new JobEntity(
-                        "12345",
-                        "Software Engineer",
-                        "TechCo",
-                        "Remote",
-                        "LinkedIn",
-                        "We are seeking a skilled Software Engineer...",
-                        "Java, Python",
-                        false,
-                        List.of(80000.0, 120000.0),
-                        List.of("Bachelors", "Masters"),
-                        List.of("Java", "Python", "Sql"),
-                        "2023-05-15",
-                        "Full-Time"
-                ),
-                new JobEntity(
-                        "54321",
-                        "Data Scientist",
-                        "Amazon",
-                        "Remote",
-                        "LinkedIn",
-                        "This is description",
-                        "extensions",
-                        false,
-                        List.of(100000.0, 200000.0),
-                        List.of("Masters"),
-                        List.of("Docker", "Python", "Sql"),
-                        "2023-05-18",
-                        "Part-Time"
-                ),
-                new JobEntity(
-                        "12356",
-                        "Data Scientist",
-                        "ABC",
-                        "Remote",
-                        "LinkedIn",
-                        "We are seeking a skilled Software Engineer...",
-                        "this is extensions",
-                        false,
-                        List.of(60000.0, 140000.0),
-                        List.of("Bachelors", "Masters"),
-                        List.of("Elf", "Cloud", "Python"),
-                        "2023-05-15",
-                        "Full-Time"
-                )
+        private static final JobEntity job1 = new JobEntity(
+                1,
+                "12345",
+                "Software Engineer",
+                "TechCo",
+                "Remote",
+                "LinkedIn",
+                "We are seeking a skilled Software Engineer...",
+                "Java, Python",
+                false,
+                "2023-05-15",
+                "Full-Time"
         );
-    }
 
-    public static List<Skill> createMockSkills() {
-        return Arrays.asList(
+        private static final JobEntity job2 = new JobEntity(
+                2,
+                "54321",
+                "Data Scientist",
+                "Amazon",
+                "Remote",
+                "LinkedIn",
+                "This is description",
+                "extensions",
+                false,
+                "2023-05-18",
+                "Part-Time"
+        );
+
+        private static final JobEntity job3 = new JobEntity(
+                3,
+                "12356",
+                "Data Scientist",
+                "ABC",
+                "Remote",
+                "LinkedIn",
+                "We are seeking a skilled Software Engineer...",
+                "this is extensions",
+                false,
+                "2023-05-15",
+                "Full-Time"
+        );
+
+        public static List<JobEntity> createMockJobEntity() {
+                return Arrays.asList(job1, job2, job3);
+        }
+        
+        public static List<Skill> createMockSkills() {
+                return Arrays.asList(
                         new SkillEntity(
-                                "Java",
                                 1,
-                                11.11
+                                job1,
+                                "Software Engineer",
+                                "Java"
                         ),
                         new SkillEntity(
-                                "Python",
-                                3,
-                                33.33
+                                2, 
+                                job2,
+                                "Data Scientist", 
+                                "Python"
                         ),
                         new SkillEntity(
-                                "Sql",
-                                2,
-                                22.22
+                                3, 
+                                job2,
+                                "Data Scientist",
+                                "Sql"
                         ),
                         new SkillEntity(
-                                "Docker",
-                                1,
-                                11.11
+                                4, 
+                                job2,
+                                "Data Scientist",
+                                "Docker"
                         ),
                         new SkillEntity(
-                                "Elf",
-                                1,
-                                11.11
+                                5, 
+                                job2,
+                                "Data Scientist",
+                                "Elf"
                         ),
                         new SkillEntity(
-                                "Cloud",
-                                1,
-                                11.11
+                        62, 
+                                job2,
+                                "Data Scientist",
+                                "Cloud"
                         )
         ).stream().map(SkillMapping::mapSkillEntityToSkill).toList();
     }
