@@ -43,7 +43,8 @@ export const LineChart = ({ id, chartData, title }) => {
                                         color: "#E3E3E3",
                                         font: {size: 15} ,
                                         callback: function (value) {
-                                            return "$" + value;
+                                            if (id === "num") {return value;}
+                                            else {return "$" + value;}
                                         },
                                         padding: 10,
                                     },
@@ -84,7 +85,8 @@ export const LineChart = ({ id, chartData, title }) => {
                                     },
                                     offset: 6,
                                     formatter: function(value) {
-                                        return "$" + value;
+                                        if (id === "num") {return value;}
+                                        else {return "$" + value;}
                                     },
                                     labels: {
                                         title: {

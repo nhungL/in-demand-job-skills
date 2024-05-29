@@ -44,7 +44,7 @@ export const ScrapedDataGraph = () => {
 
     return (
         <StyledChartContainer>
-            <LineChart id="large" chartData={chartData} title={"Jobs Added and Total Jobs Over Time"}/>
+            <LineChart id="num" chartData={chartData} title={"Jobs Added and Total Jobs Over Time"}/>
         </StyledChartContainer>
     );
 }
