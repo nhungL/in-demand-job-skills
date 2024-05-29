@@ -17,5 +17,5 @@ export const FetchAllInsertionStats = () => {
     if (error)  {console.log("Error" + error.message);}
     console.log("INSERTION DATA Query:", data);
 
-    return data;
+    return { loading, error, data };
 }

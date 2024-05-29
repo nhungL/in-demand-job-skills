@@ -1,37 +1,50 @@
-import {FetchAllTitles} from "../../graphql/TitleQueries";
+import {FetchAllInsertionStats} from "../../graphql/InsertionStatQueries";
 import {StyledChartContainer} from "../../styles/styled-components/StyledCharts";
 import {LineChart} from "../../styles/chart/LineChart";
 import {Loading} from "../../components/Loading";
 
 export const ScrapedDataGraph = () => {
-
-    const {loading, error, data} = FetchAllTitles();
-
+    const { loading, error, data }  = FetchAllInsertionStats();
     if (loading) return <Loading/>;
     if (error) return <p>Error: {error.message}</p>;
 
-    const dataByTitle = data.getAllTitles;
+    const insertionStat = data?.getInsertionDataStat;
+    console.log(insertionStat);
 
-    const titleList = dataByTitle.map((data) => data.title);
-    const avgSalary = dataByTitle.map((data) => data.avgSalary.toFixed(2));
+    const labels = insertionStat.map((item) => {
+        const date = item.updatedAt;
+        const { format } = require('date-fns');
+        const day = format(new Date(date.substring(0, 10)), 'MMM/dd/yyyy');
+        return day
+    });
+    const jobsAdded = insertionStat.map((item) => item.jobsAdded);
+    const totalJobs = insertionStat.map((item) => item.totalJobs);
 
     const chartData = {
-        labels: titleList,
+        labels: labels,
         datasets: [
             {
-                label: "Average Salary",
-                data: avgSalary,
-                backgroundColor: "rgba(255,0,0,0.71)",
-                borderColor: "rgba(255,0,0,0.71)",
-                borderWidth: 3,
+              label: "Jobs Added",
+              data: jobsAdded,
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1,
+              fill: false,
             },
-        ],
+            {
+              label: "Total Jobs",
+              data: totalJobs,
+              backgroundColor: "rgba(153, 102, 255, 0.2)",
+              borderColor: "rgba(153, 102, 255, 1)",
+              borderWidth: 1,
+              fill: false,
+            },
+          ],
     };
 
     return (
         <StyledChartContainer>
-            <h5 style={{color: "#929292"}}>Coming Update: Graph shows Scraped Data Monthly/Daily</h5>
-            <LineChart id="small" chartData={chartData} title={"Average Salary By Title"}/>
+            <LineChart id="large" chartData={chartData} title={"Jobs Added and Total Jobs Over Time"}/>
         </StyledChartContainer>
     );
 }

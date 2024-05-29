@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {StyledDivContainer} from "../../styles/styled-components/StyledMain";
 import {FetchAllInsertionStats} from "../../graphql/InsertionStatQueries";
 import {isNumber} from "chart.js/helpers";
+import {Loading} from "../../components/Loading";
 
 const StyledTableContainer = styled.table ({
     height: "20vh",
@@ -25,8 +26,12 @@ const StyledTableBody = styled.tbody ({
 
 
 export const ScrapedDataStat = () => {
-    const insertionData = FetchAllInsertionStats();
-    const insertionStat = insertionData?.getInsertionDataStat;
+    const { loading, error, data }  = FetchAllInsertionStats();
+    if (loading) return <Loading/>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const insertionStat = data?.getInsertionDataStat;
+    console.log(insertionStat);
 
     const statData = [];
     const statTrends = [];
